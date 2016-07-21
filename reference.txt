@@ -1,0 +1,59 @@
+(1) HTML DOM Hierarchy ,name,types,definitions
+    [https://www.w3.org/TR/DOM-Level-1/level-one-core.html]
+    Document Node,Element Node,Text Node
+
+
+(2)trim() Remove whitespace from both sides of a string:
+
+
+
+for identifying model variable several examples  are
+
+1)var vm=this;
+2)vm.name='misu';
+3)vm.person={
+    name:'Misu',
+    roll:0516
+}
+
+4) vm.name=getName();
+
+
+function getName(){
+    return 'misu';
+}
+
+style guid:(http://angularjs.blogspot.com/2014/02/an-angularjs-style-guide-and-best.html)
+App structure :(https://docs.google.com/document/d/1XXMvReO8-Awi1EZXAXS4PzDzdNvV6pGcuaF4Q9821Es/pub)
+
+
+var derective=
+ {
+    element:'E',
+    link:'',
+    scope:""
+ }
+
+5)singleton in javascript
+
+var Singleton = function () {
+    var instance = null;
+
+    function createInstance() {
+        var object = generateUUID();
+        return object;
+    }
+
+    return {
+        getInstance: function () {
+            if (instance != null) {
+                instance = createInstance();
+            }
+            return instance;
+        },
+        setInstanceNull: function () {
+            instance = null;
+        }
+
+    };
+};
