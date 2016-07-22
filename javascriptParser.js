@@ -230,44 +230,43 @@ function isViewModelAssignmentExpression(node) {
             }
         }
     }
-    function getAssignmentValueFromRightSide(viewModelIdentifier, node) {
-        if (node.right.type == 'ObjectExpression') {
-            var objectProperties = new Array();
-            for (var j = 0; j < node.right.properties.length; j++) {
-                var name = node.right.properties[j].key.value;
-                var value = node.right.properties[j].value.value;
-                var type = typeof value;
-                objectProperties.push(new property(name, value, type));
-            }
-            return new objectVariableInController(viewModelIdentifier, objectProperties, 'viewModelObject');
-        }
-        if (node.right.type == 'ArrayExpression') {
-            var elements = node.right.elements;
-            var elementProperties = new Array();
-            for (var k = 0; k < elements.length; k++) {
-                var value = elements[k].value;
-                var type = typeof value;
-                elementProperties.push(new element(value, type));
-            }
-            return new arrayVariableInController(viewModelIdentifier, elementProperties);
-        }
-        if (node.right.type == 'Literal') {
-            var variableValue = node.right.value;
-            var variableDataType = typeof variableValue;
-            return new singleVariableInController(viewModelIdentifier, variableValue, variableDataType);
-        }
-        if (node.right.type == 'CallExpression') {
-            //new have to implement;
-            var variableValue = node.right.value;
-            var variableDataType = typeof variableValue;
-            //viewModelAssignmentVariable.push(new singleVariableInController(viewModelIdentifier, variableValue, variableDataType));
-            return new singleVariableInController(viewModelIdentifier, variableValue, variableDataType);
-        }
+}
 
+function getAssignmentValueFromRightSide(viewModelIdentifier, node) {
+    if (node.right.type == 'ObjectExpression') {
+        var objectProperties = new Array();
+        for (var j = 0; j < node.right.properties.length; j++) {
+            var name = node.right.properties[j].key.value;
+            var value = node.right.properties[j].value.value;
+            var type = typeof value;
+            objectProperties.push(new property(name, value, type));
+        }
+        return new objectVariableInController(viewModelIdentifier, objectProperties, 'viewModelObject');
+    }
+    if (node.right.type == 'ArrayExpression') {
+        var elements = node.right.elements;
+        var elementProperties = new Array();
+        for (var k = 0; k < elements.length; k++) {
+            var value = elements[k].value;
+            var type = typeof value;
+            elementProperties.push(new element(value, type));
+        }
+        return new arrayVariableInController(viewModelIdentifier, elementProperties);
+    }
+    if (node.right.type == 'Literal') {
+        var variableValue = node.right.value;
+        var variableDataType = typeof variableValue;
+        return new singleVariableInController(viewModelIdentifier, variableValue, variableDataType);
+    }
+    if (node.right.type == 'CallExpression') {
+        //new have to implement;
+        var variableValue = node.right.value;
+        var variableDataType = typeof variableValue;
+        //viewModelAssignmentVariable.push(new singleVariableInController(viewModelIdentifier, variableValue, variableDataType));
+        return new singleVariableInController(viewModelIdentifier, variableValue, variableDataType);
     }
 
 }
-
 
 /*all initialize and uninitialized variable
  * var m;(null initialization)
