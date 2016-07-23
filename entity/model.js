@@ -18,9 +18,28 @@ function singleVariableInController(name, value, dataType) {
 
 function objectVariableInController(name, properties, dataType) {
     this.name = name;
-    this.properties = properties;
+    this.properties = convertObjectProperties(name,properties);
     this.dataType = dataType;
 }
+
+
+
+function convertObjectProperties(objectName,properties)
+{
+    var objectPropertySerelization=new Array();
+    for(var i=0; i<properties.length;i++)
+    {
+        var name=objectName+"."+properties[i].name;
+        var dataType=properties[i].dataType;
+        var value=properties[i].value;
+        objectPropertySerelization(new Property(name,dataType,value));
+    }
+
+}
+
+
+
+
 
 function arrayVariableInController(name, elements) {
     this.name = name;
