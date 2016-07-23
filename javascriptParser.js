@@ -12,20 +12,22 @@ function getJavaScriptCode() {
     var ast = esprima.parse(textInEditor, {loc: true});
     var variablesList = new Array();
     var viewModelAssignmentVariable = new Array();
+    var assignedVariableList = new Array();
+
     estraverse.traverse(ast, {
         enter: function (node, parent) {
-
-            isViewModelThisExpression(node);
-
             if (isViewModelAssignmentExpression(node)) {
                 viewModelAssignmentVariable.push(isViewModelAssignmentExpression(node));
             }
-            isFunctionExpressionAndDeclaration(node);
-            if (isVariableDeclaration(node)) {
-                variablesList.push(isVariableDeclaration(node));
+            if (isVariableDeclarationWithInitialization(node)) {
+                variablesList.push(isVariableDeclarationWithInitialization(node));
             }
+            if (isAssignmentExpression(node)) {
+                assignedVariableList.push(isAssignmentExpression(node));
+            }
+            isFunctionExpressionAndDeclaration(node);
             isCalleeExpression(node);
-            isAssignmentExpression(node);
+            isViewModelThisExpression(node);
         }
     });
 }
@@ -159,8 +161,8 @@ function isAssignmentExpression(node) {
                     var type = typeof value;
                     objectProperties.push(new property(name, value, type));
                 }
-                assignedVariables.push(new objectVariableInController(arsingName, objectProperties, 'assignedObject'));
-
+                //assignedVariables.push(new objectVariableInController(arsingName, objectProperties, 'assignedObject'));
+                return new objectVariableInController(arsingName, objectProperties, 'assignedObject');
             }
             if (node.right.type == 'ArrayExpression') {
                 var elements = node.right.elements;
@@ -170,20 +172,23 @@ function isAssignmentExpression(node) {
                     var type = typeof value;
                     elementProperties.push(new element(value, type));
                 }
-                assignedVariables.push(new arrayVariableInController(arsingName, elementProperties));
+                //assignedVariables.push(new arrayVariableInController(arsingName, elementProperties));
+                return new arrayVariableInController(arsingName, elementProperties)
             }
 
             if (node.right.type == 'Literal') {
                 var variableValue = node.right.value;
                 var variableDataType = typeof variableValue;
-                assignedVariables.push(new singleVariableInController(arsingName, variableValue, variableDataType));
+                //assignedVariables.push(new singleVariableInController(arsingName, variableValue, variableDataType));
+                return new singleVariableInController(arsingName, variableValue, variableDataType);
+            }
+            if (node.right.type == 'CallExpression') {
+                //new have to implement;
             }
 
         }
 
     }
-
-
 }
 
 /*
@@ -260,10 +265,7 @@ function getAssignmentValueFromRightSide(viewModelIdentifier, node) {
     }
     if (node.right.type == 'CallExpression') {
         //new have to implement;
-        var variableValue = node.right.value;
-        var variableDataType = typeof variableValue;
-        //viewModelAssignmentVariable.push(new singleVariableInController(viewModelIdentifier, variableValue, variableDataType));
-        return new singleVariableInController(viewModelIdentifier, variableValue, variableDataType);
+
     }
 
 }
@@ -285,7 +287,7 @@ function getAssignmentValueFromRightSide(viewModelIdentifier, node) {
  * }
  * */
 
-function isVariableDeclaration(node) {
+function isVariableDeclarationWithInitialization(node) {
     if (node.type == 'VariableDeclaration') {
         var declarations = node.declarations;
         for (var i = 0; i < declarations.length; i++) {
@@ -317,6 +319,10 @@ function isVariableDeclaration(node) {
                         var variableValue = declarations[i].init ? declarations[i].init.value : 'uninitialized';
                         var variableDataType = declarations[i].init ? typeof declarations[i].init.value : 'none';
                         return new singleVariableInController(variableName, variableValue, variableDataType);
+                    }
+                    if (declarations[i].init.type == 'CallExpression') {
+
+
                     }
                 }
                 else {
