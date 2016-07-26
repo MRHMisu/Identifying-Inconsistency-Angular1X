@@ -24,18 +24,7 @@ function objectVariableInController(name, properties, dataType) {
 
 
 
-function convertObjectProperties(objectName,properties)
-{
-    var objectPropertySerelization=new Array();
-    for(var i=0; i<properties.length;i++)
-    {
-        var name=objectName+"."+properties[i].name;
-        var dataType=properties[i].dataType;
-        var value=properties[i].value;
-        objectPropertySerelization(new Property(name,dataType,value));
-    }
 
-}
 
 
 
