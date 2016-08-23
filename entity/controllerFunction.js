@@ -15,3 +15,4 @@ function ControllerFunction(controllerFunctionName,parameters,returnType)
     this.parameters=parameters;
     this.returnType=returnType;
 }
+
