@@ -161,8 +161,8 @@ function isAssignmentExpression(node) {
                     var type = typeof value;
                     objectProperties.push(new property(name, value, type));
                 }
-                //assignedVariables.push(new objectVariableInController(arsingName, objectProperties, 'assignedObject'));
-                return new objectVariableInController(arsingName, objectProperties, 'assignedObject');
+                //assignedVariables.push(new modelVariable(arsingName, objectProperties, 'assignedObject'));
+                return new modelVariable(arsingName, objectProperties, 'assignedObject');
             }
             if (node.right.type == 'ArrayExpression') {
                 var elements = node.right.elements;
@@ -246,7 +246,7 @@ function getAssignmentValueFromRightSide(viewModelIdentifier, node) {
             var type = typeof value;
             objectProperties.push(new property(name, value, type));
         }
-        return new objectVariableInController(viewModelIdentifier, objectProperties, 'viewModelObject');
+        return new modelVariable(viewModelIdentifier, objectProperties, 'viewModelObject');
     }
     if (node.right.type == 'ArrayExpression') {
         var elements = node.right.elements;
@@ -302,7 +302,7 @@ function isVariableDeclarationWithInitialization(node) {
                             var type = typeof value;
                             objectProperties.push(new property(name, value, type));
                         }
-                        return new objectVariableInController(variableName, objectProperties, 'objectType');
+                        return new modelVariable(variableName, objectProperties, 'objectType');
                     }
                     if (declarations[i].init.type == 'ArrayExpression') {
 

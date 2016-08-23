@@ -4,12 +4,13 @@
 var esprima=require('esprima');
 var estraverse=require('estraverse');
 
-
+var textInEditor;
 parseAngularCodeFromJS();
 function parseAngularCodeFromJS() {
 
+    var code = document.getElementById('textEditor').value;
     //parse javascript code
-   var code = "var x=8;";
+
 
     //var ast = esprima.parse(textInEditor, {loc: true, range: true, comment: true, tokens: true});
     var ast = esprima.parse(code, {loc: true});
@@ -28,9 +29,19 @@ function parseAngularCodeFromJS() {
             if (isAssignmentExpression(node)) {
                 assignedVariableList.push(isAssignmentExpression(node));
             }
-            isFunctionExpressionAndDeclaration(node);
-            isCalleeExpression(node);
-            isViewModelThisExpression(node);
+            if(isFunctionExpressionAndDeclaration(node))
+            {
+
+            }
+            if(isCalleeExpression(node))
+            {
+
+            }
+            if(isViewModelThisExpression(node))
+            {
+
+            }
+
         }
     });
 
@@ -48,7 +59,6 @@ function parseAngularCodeFromJS() {
 
 var calleeExpression = new Array();
 function isCalleeExpression(node) {
-
     if (node.type == 'CallExpression') {
         var arguments = new Array();
         for (var i = 0; i < node.arguments.length; i++) {
@@ -166,8 +176,7 @@ function isAssignmentExpression(node) {
                     var type = typeof value;
                     objectProperties.push(new property(name, value, type));
                 }
-                //assignedVariables.push(new objectVariableInController(arsingName, objectProperties, 'assignedObject'));
-                return new objectVariableInController(arsingName, objectProperties, 'assignedObject');
+                return new modelVariable(arsingName, objectProperties, 'assignedObject');
             }
             if (node.right.type == 'ArrayExpression') {
                 var elements = node.right.elements;
@@ -184,7 +193,6 @@ function isAssignmentExpression(node) {
             if (node.right.type == 'Literal') {
                 var variableValue = node.right.value;
                 var variableDataType = typeof variableValue;
-                //assignedVariables.push(new singleVariableInController(arsingName, variableValue, variableDataType));
                 return new singleVariableInController(arsingName, variableValue, variableDataType);
             }
             if (node.right.type == 'CallExpression') {
@@ -219,14 +227,12 @@ function isViewModelAssignmentExpression(node) {
                     if (node.left.object.object.object && node.left.object.object.type == 'MemberExpression') {
                         //vm.FirstYear.student.name='misu'
                         //levelThree;
-                        var levelThree = 10;
                         var viewModelIdentifierLevelThree = node.left.object.object.object.name + '.' + node.left.object.object.property.name + '.' + node.left.object.property.name + '.' + node.left.property.name;
                         return getAssignmentValueFromRightSide(viewModelIdentifierLevelThree, node);
                     }
                     //vm.student.name='misu'
-                    var viewModelIdentifierLevelTwo = node.left.object.object.name + '.' + node.left.object.property.name + '.' + node.left.property.name;
                     //levelTwo;
-                    var levelTwo = 9;
+                    var viewModelIdentifierLevelTwo = node.left.object.object.name + '.' + node.left.object.property.name + '.' + node.left.property.name;
                     return getAssignmentValueFromRightSide(viewModelIdentifierLevelTwo, node);
                 }
                 //vm.name='misu'
@@ -234,7 +240,6 @@ function isViewModelAssignmentExpression(node) {
                 var objectName = node.left.object.name;
                 var objectProperty = node.left.property.name;
                 var viewModelIdentifierLevelOne = objectName + '.' + objectProperty;
-
                 return getAssignmentValueFromRightSide(viewModelIdentifierLevelOne, node);
 
             }
@@ -251,7 +256,7 @@ function getAssignmentValueFromRightSide(viewModelIdentifier, node) {
             var type = typeof value;
             objectProperties.push(new property(name, value, type));
         }
-        return new objectVariableInController(viewModelIdentifier, objectProperties, 'viewModelObject');
+        return new modelVariable(viewModelIdentifier, objectProperties, 'viewModelObject');
     }
     if (node.right.type == 'ArrayExpression') {
         var elements = node.right.elements;
@@ -307,7 +312,7 @@ function isVariableDeclarationWithInitialization(node) {
                             var type = typeof value;
                             objectProperties.push(new property(name, value, type));
                         }
-                        return new objectVariableInController(variableName, objectProperties, 'objectType');
+                        return new modelVariable(variableName, objectProperties, 'objectType');
                     }
                     if (declarations[i].init.type == 'ArrayExpression') {
 
@@ -339,12 +344,6 @@ function isVariableDeclarationWithInitialization(node) {
         }
     }
 }
-function ControllerFunction(usedDirectiveName,controllerFunctionName)
-{
-    this.usedDirectiveName=usedDirectiveName;
-    this.controllerFunctionName=controllerFunctionName;
-
-}
 
 function ControllerFunction(controllerFunctionName,parameters,returnType)
 {
@@ -352,12 +351,6 @@ function ControllerFunction(controllerFunctionName,parameters,returnType)
     this.parameters=parameters;
     this.returnType=returnType;
 }
-function ModelVariableInView(usedDirectiveName, modelVariableName) {
-    this.usedDirectiveName = usedDirectiveName;
-    this.modelVariableName = modelVariableName;
-
-}
-
 function singleVariableInController(name, value, dataType) {
     this.name = name;
     this.value = value;
@@ -365,9 +358,9 @@ function singleVariableInController(name, value, dataType) {
 
 }
 
-function objectVariableInController(name, properties, dataType) {
+function modelVariable(name, properties, dataType) {
     this.name = name;
-    this.properties = convertObjectProperties(name,properties);
+    this.properties = properties;
     this.dataType = dataType;
 }
 
