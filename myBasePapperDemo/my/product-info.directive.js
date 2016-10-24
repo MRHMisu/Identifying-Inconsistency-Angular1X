@@ -1,6 +1,3 @@
-/**
- * Created by Misu Be Imp on 7/26/2016.
- */
 (function() {
     'use strict';
     function constructor() {

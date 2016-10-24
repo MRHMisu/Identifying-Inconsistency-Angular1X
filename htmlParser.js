@@ -22,6 +22,7 @@ function getHTMLCode() {
     for (var k = 0; k < modelControllerElements.length; k++) {
         if (modelControllerElements[k] != null) {
             modelViewController.controllerName = modelControllerElements[k].getAttribute("ng-controller");
+            var cleanLine=getCleanLines(modelViewController.controllerName);
             if (modelViewController.controllerName.indexOf('as') > -1) {
                 var parsedControllerAsExpression = modelViewController.controllerName.split(" ");
                 modelViewController.controllerName = parsedControllerAsExpression[0];
@@ -42,7 +43,7 @@ function getHTMLCode() {
             if (elements != null && elements.length > 0) {
                 for (var j = 0; j < elements.length; j++) {
                     var directiveAttributeModelValue = elements[j].getAttribute(directive.signature);
-                    correspondingControllerView.modelVaribaleList.push(new ModelVariableInView(directive.signature, directiveAttributeModelValue));
+                    correspondingControllerView.modelVaribaleList.push(new ModelVariableInView(directive.signature, directiveAttributeModelValue.replace(/{{/g, '').replace(/}}/g, '').trim()));
 
                 }
             }
@@ -53,7 +54,6 @@ function getHTMLCode() {
             var directiveControllerFunction = angularAttributeDirectiveForControllerFunctions[i];
             //var element=parsedDOM.querySelector('['+directive.signature+']');
             var elements = modelControllerElements[k].querySelectorAll('[' + directiveControllerFunction.signature + ']');
-
             if (elements != null && elements.length > 0) {
                 for (var j = 0; j < elements.length; j++) {
                     var directiveAttributeControllerFunctionValue = elements[j].getAttribute(directiveControllerFunction.signature);
@@ -82,12 +82,11 @@ function getHTMLCode() {
 
         }
 
+        //get all angular Expression {{*}}
         var allAngularExpression=traversNgRepeat(modelControllerElements[k], new Array(), modelControllerElements[k]);
-
         viewList.push(correspondingControllerView);
     }
 }
-
 
 function traversControllerDomForFindingAngularExpression(node, correspondingControllerView, theDom) {
     if (node.nodeType == 9) { //DOCUMENT node
@@ -106,6 +105,7 @@ function traversControllerDomForFindingAngularExpression(node, correspondingCont
         }
     }
     else if (node.nodeType == 1) { //ELEMENT node
+        console.log(getLineNumber(node,theDom))
         for (var i = 0; i < node.childNodes.length; i++) {
             traversControllerDomForFindingAngularExpression(node.childNodes[i], correspondingControllerView, theDom);
         }
