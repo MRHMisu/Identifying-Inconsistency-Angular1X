@@ -9,6 +9,8 @@ function getHTMLCode() {
     textInEditor = document.getElementById('textEditor').value;
     var htmlParser = new DOMParser();
     var parsedDOM = htmlParser.parseFromString(textInEditor, "text/html");
+
+
     //end parsing
 
     //list of views in a single html file
@@ -22,7 +24,6 @@ function getHTMLCode() {
     for (var k = 0; k < modelControllerElements.length; k++) {
         if (modelControllerElements[k] != null) {
             modelViewController.controllerName = modelControllerElements[k].getAttribute("ng-controller");
-            var cleanLine=getCleanLines(modelViewController.controllerName);
             if (modelViewController.controllerName.indexOf('as') > -1) {
                 var parsedControllerAsExpression = modelViewController.controllerName.split(" ");
                 modelViewController.controllerName = parsedControllerAsExpression[0];
@@ -68,7 +69,7 @@ function getHTMLCode() {
 
         var allNgRepeatElement = modelControllerElements[k].querySelectorAll("[ng-repeat]");
         for (var i = 0; i < allNgRepeatElement.length; i++) {
-            element = allNgRepeatElement[i].getAttribute('ng-repeat');
+            var element = allNgRepeatElement[i].getAttribute('ng-repeat');
             var ngRepeatExpression = element.split("in");
             var alice = ngRepeatExpression[0].trim();
             var modelVariable = ngRepeatExpression[1].trim();
