@@ -11,7 +11,6 @@ var modelVariablesList = [];
 var modelVariableArraylist = [];
 
 
-
 function modelVariable(name, value, type, lineNumber) {
     this.name = name;
     this.value = value;
@@ -32,13 +31,19 @@ function element(value, type) {
 }
 
 
-var functionList=[];
+var functionList = [];
 
-function controllerFunction(CFName, parameters, returnType) {
+function controllerFunction(CFName, returnType) {
     this.CFName = CFName;
-    this.parameters = parameters;
     this.returnType = returnType;
 }
+function variable(name, value, type, lineNumber) {
+    this.name = name;
+    this.value = value;
+    this.type = type;
+    this.lineNumber = lineNumber;
+}
+
 
 function singleVariableInController(name, value, dataType) {
     this.name = name;
@@ -60,7 +65,6 @@ function property(name, value, type) {
 }
 
 
-
 function getJavaScriptCode() {
     var jsRawCode = document.getElementById('textEditor').value;
     var ast = esprima.parse(jsRawCode, {loc: true});
@@ -72,11 +76,11 @@ function getJavaScriptCode() {
             isViewModelAssignmentExpression(node);
 
             /*if (isVariableDeclarationWithInitialization(node)) {
-                modelVariablesList.push(isVariableDeclarationWithInitialization(node));
-            }
-            if (isAssignmentExpression(node)) {
-                assignedVariableList.push(isAssignmentExpression(node));
-            }*/
+             modelVariablesList.push(isVariableDeclarationWithInitialization(node));
+             }
+             if (isAssignmentExpression(node)) {
+             assignedVariableList.push(isAssignmentExpression(node));
+             }*/
             isFunctionExpressionAndDeclaration(node);
             isCalleeExpression(node);
 
@@ -186,7 +190,6 @@ function getAssignmentValueFromRightSide(viewModelIdentifier, node) {
 }
 
 
-
 /*
  * function (m)
  * {
@@ -196,21 +199,33 @@ function getAssignmentValueFromRightSide(viewModelIdentifier, node) {
  * */
 function isFunctionExpressionAndDeclaration(node) {
     if (node.type == 'FunctionExpression' || node.type == 'FunctionDeclaration') {
-
         var functionName = node.id ? node.id.name : "anonymous_functions";
-        var parameters = new Array();
-        for (var i = 0; i < node.params.length; i++) {
-            parameters.push(node.params[i].name);
-        }
-        var returnExpression = 'void';
+        var functionBody = node.body.body;
         var length = node.body.body.length;
+        var returnExpression;
+        var returnedType = 'void';
         if (length > 0) {
             if (node.body.body[length - 1].type == "ReturnStatement") {
                 returnExpression = node.body.body[length - 1].argument;
             }
         }
-        var returnedType = inferReturnedType(returnExpression);
-        functionList.push(new controllerFunction(functionName, parameters, returnExpression));
+        var functionInternalVariableList = [];
+        for (var i = 0; i < functionBody.length; i++) {
+            var identifierObject=getInternalFunctionVariableNameAndType(functionBody[i]);
+            if(identifierObject){
+                functionInternalVariableList.push(identifierObject);
+            }
+
+        }
+        var returnRegEx='/'+returnExpression.name+'/g';
+        var returnTypeIdentifier =eval(returnRegEx);
+        for (var j = 0; j < functionInternalVariableList.length; j++) {
+            if (returnTypeIdentifier.exec(functionInternalVariableList[j].name)) {
+                returnedType = functionInternalVariableList[j].type;
+            }
+
+        }
+        functionList.push(new controllerFunction(functionName, returnedType));
     }
 
 }
@@ -306,9 +321,6 @@ function isCalleeExpression(node) {
 }
 
 
-
-
-
 /*
  *Name="Misu";
  * roll=0516;
@@ -321,12 +333,22 @@ function isCalleeExpression(node) {
  *
  * */
 
-var assignedVariables = new Array();
 function isAssignmentExpression(node) {
     if (node.type == 'AssignmentExpression' && node.operator == '=') {
         if (node.left.type == 'Identifier') {
             var arsingName = node.left.name;
+            if (node.right.type == 'Literal') {
+                var variableValue = node.right.value;
+                var variableDataType = typeof variableValue;
 
+                return new singleVariableInController(arsingName, variableValue, variableDataType);
+            }
+            if (node.right.type == 'Identifier') {
+                var variableValue = node.right.value;
+                var variableDataType = typeof variableValue;
+
+                return new singleVariableInController(arsingName, variableValue, variableDataType);
+            }
             if (node.right.type == 'ObjectExpression') {
                 var objectProperties = new Array();
                 for (var j = 0; j < node.right.properties.length; j++) {
@@ -335,7 +357,6 @@ function isAssignmentExpression(node) {
                     var type = typeof value;
                     objectProperties.push(new property(name, value, type));
                 }
-                //assignedVariables.push(new modelVariable(arsingName, objectProperties, 'assignedObject'));
                 return new modelVariable(arsingName, objectProperties, 'assignedObject');
             }
             if (node.right.type == 'ArrayExpression') {
@@ -346,22 +367,12 @@ function isAssignmentExpression(node) {
                     var type = typeof value;
                     elementProperties.push(new element(value, type));
                 }
-                //assignedVariables.push(new arrayVariableInController(arsingName, elementProperties));
                 return new arrayVariableInController(arsingName, elementProperties)
             }
-
-            if (node.right.type == 'Literal') {
-                var variableValue = node.right.value;
-                var variableDataType = typeof variableValue;
-                //assignedVariables.push(new singleVariableInController(arsingName, variableValue, variableDataType));
-                return new singleVariableInController(arsingName, variableValue, variableDataType);
-            }
             if (node.right.type == 'CallExpression') {
-                //new have to implement;
+                //ToDo
             }
-
         }
-
     }
 }
 
@@ -418,7 +429,7 @@ function isVariableDeclarationWithInitialization(node) {
                     }
                     if (declarations[i].init.type == 'CallExpression') {
 
-
+                        //ToDo
                     }
                 }
                 else {
@@ -430,7 +441,57 @@ function isVariableDeclarationWithInitialization(node) {
         }
     }
 }
+function getInternalFunctionVariableNameAndType(node) {
+    if (node.type == 'VariableDeclaration') {
+        var declarations = node.declarations;
+        for (var i = 0; i < declarations.length; i++) {
+            if (declarations[i].type == 'VariableDeclarator') {
+                var variableName = declarations[i].id.name;
+                if (declarations[i].init) {
+                    if (declarations[i].init.type == 'Literal') {
+                        var variableValue = declarations[i].init ? declarations[i].init.value : 'uninitialized';
+                        var variableDataType = declarations[i].init ? typeof declarations[i].init.value : 'none';
+                        return {name: variableName, type: variableDataType};
+                    }
+                    if (declarations[i].init.type == 'ObjectExpression') {
+                        var objectProperties = new Array();
+                        for (var j = 0; j < declarations[i].init.properties.length; j++) {
+                            var name = declarations[i].init.properties[j].key.value;
+                            var value = declarations[i].init.properties[j].value.value;
+                            var type = typeof value;
+                            objectProperties.push(new property(name, value, type));
+                        }
+                        return {name: variableName, type: "objects"};
+                    }
+                    if (declarations[i].init.type == 'ArrayExpression') {
 
+                        var elements = declarations[i].init.elements;
+                        var elementProperties = new Array();
+                        for (var k = 0; k < elements.length; k++) {
+                            var value = elements[k].value;
+                            var type = typeof value;
+                            elementProperties.push(new element(value, type));
+                        }
+                        return {name: variableName, type: "array"};
+                    }
+
+                    if (declarations[i].init.type == 'CallExpression') {
+                        //ToDo
+                        return;
+                    }
+                    if (declarations[i].init.type == 'ReturnStatement') {
+                     return;
+                     }
+                }
+                else {
+                    var variableValue = 'uninitialized';
+                    var variableDataType = 'null';
+                    return {name: variableName, type: variableDataType};
+                }
+            }
+        }
+    }
+}
 
 
 

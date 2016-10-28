@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6299093c-7c69-4941-b4b2-252c9f4af935" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/demoeditor.html" afterPath="$PROJECT_DIR$/demoeditor.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ControllerParser.js" afterPath="$PROJECT_DIR$/ControllerParser.js" />
     </list>
     <ignored path="Identifying-Inconsistency-Angular1X.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -98,6 +97,16 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Identifying-Inconsistency-Angular1X" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Identifying-Inconsistency-Angular1X" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -182,15 +191,15 @@
       <updated>1477467803869</updated>
       <workItem from="1477467807407" duration="10317000" />
       <workItem from="1477501880384" duration="4818000" />
-      <workItem from="1477668961024" duration="8949000" />
+      <workItem from="1477668961024" duration="12004000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="24084000" />
+    <option name="totallyTimeSpent" value="27139000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18667643" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -268,22 +277,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/angularDirectiveList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="54" column="74" selection-start-line="54" selection-start-column="74" selection-end-line="54" selection-end-column="74" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ViewParser.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2005">
-          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/entity/ModelViewController.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -342,13 +335,34 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ControllerParser.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="50">
-          <caret line="193" column="4" selection-start-line="193" selection-start-column="4" selection-end-line="193" selection-end-column="4" />
+        <state relative-caret-position="427">
+          <caret line="485" column="22" selection-start-line="485" selection-start-column="22" selection-end-line="485" selection-end-column="22" />
           <folding>
             <element signature="n#!!block;n#isViewModelThisExpression#0" expanded="false" />
             <element signature="n#!!block;n#isViewModelAssignmentExpression#0" expanded="false" />
-            <element signature="n#!!block;n#getAssignmentValueFromRightSide#0" expanded="false" />
+            <element signature="e#7811#8005#0" expanded="false" />
+            <element signature="n#!!block;n#inferReturnedType#0" expanded="false" />
+            <element signature="n#!!block;n#inferAssignedLiteralType#0" expanded="false" />
+            <element signature="n#!!block;n#isCalleeExpression#0" expanded="false" />
+            <element signature="n#!!block;n#isAssignmentExpression#0" expanded="false" />
+            <element signature="n#!!block;n#isVariableDeclarationWithInitialization#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ViewParser.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="460">
+          <caret line="96" column="25" selection-start-line="96" selection-start-column="21" selection-end-line="96" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/angularDirectiveList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="64" column="114" selection-start-line="64" selection-start-column="114" selection-end-line="64" selection-end-column="114" />
+          <folding />
         </state>
       </provider>
     </entry>
