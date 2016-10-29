@@ -6,6 +6,16 @@
  * @param {Object} theAst
  * 			The AST in JSON format
  */
+
+
+var routers=[];
+
+function getRouter()
+{
+    var jsRawCode = document.getElementById('textEditor').value;
+    var ast = esprima.parse(jsRawCode, {loc: true,tokens: true});
+    extractRouters_Angular(ast);
+}
 function extractRouters_Angular(theAst) {
     estraverse.traverse(theAst, {
         enter: function(node) {
