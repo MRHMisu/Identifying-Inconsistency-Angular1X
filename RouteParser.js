@@ -1,24 +1,22 @@
 /**
  * Created by Misu Be Imp on 10/29/2016.
  */
-/**
- * Extracts routers from the AST
- * @param {Object} theAst
- * 			The AST in JSON format
- */
 
+var routers = [];
+function route(controller, templateUrl, controllerAs) {
+    this.controller = controller;
+    this.templateUrl = templateUrl;
+    this.controllerAs = controllerAs;
 
-var routers=[];
-
-function getRouter()
-{
-    var jsRawCode = document.getElementById('textEditor').value;
-    var ast = esprima.parse(jsRawCode, {loc: true,tokens: true});
-    extractRouters_Angular(ast);
 }
-function extractRouters_Angular(theAst) {
-    estraverse.traverse(theAst, {
-        enter: function(node) {
+function getRouter() {
+    var jsRawCode = document.getElementById('textEditor').value;
+    var ast = esprima.parse(jsRawCode, {loc: true, tokens: true});
+    ParseRouteConfigFile(ast);
+}
+function ParseRouteConfigFile(ast) {
+    estraverse.traverse(ast, {
+        enter: function (node) {
             if (node.type === 'CallExpression') {
                 var callee = node.callee;
                 if (callee == undefined || callee.property == undefined ||
@@ -27,37 +25,40 @@ function extractRouters_Angular(theAst) {
                     return;
                 }
 
-                //If the above conditions are met, along with the conditions below, get the object
-                //representing the controller and templateUrl values
                 var arguments = node.arguments;
                 if (arguments != undefined && arguments[1] != undefined && arguments[1].type != undefined &&
                     arguments[1].type == 'ObjectExpression' && arguments[1].properties != undefined) {
-                    //Now, check if the object expression contains the properties controller and templateUrl
+
                     var foundControllerProp = false;
                     var foundTemplateUrlProp = false;
-                    var controllerProp = '';
-                    var templateUrlProp = '';
+                    var foundControllerAsProp = false;
+                    var controllerProperty = '';
+                    var templateUrlProperty = '';
+                    var controllerAsProperty = '';
                     for (i in arguments[1].properties) {
                         var property = arguments[1].properties[i];
                         if (property.key.type == 'Identifier' && property.key.name == 'controller'
                             && property.value.type == 'Literal' && property.value.value != undefined
                             && typeof property.value.value == 'string') {
-                            controllerProp = property.value.value;
+                            controllerProperty = property.value.value;
                             foundControllerProp = true;
                         }
                         else if (property.key.type == 'Identifier' && property.key.name == 'templateUrl'
                             && property.value.type == 'Literal' && property.value.value != undefined
                             && typeof property.value.value == 'string') {
-                            templateUrlProp = property.value.value;
+                            templateUrlProperty = property.value.value;
+                            foundTemplateUrlProp = true;
+                        }
+                        else if (property.key.type == 'Identifier' && property.key.name == 'controllerAs'
+                            && property.value.type == 'Literal' && property.value.value != undefined
+                            && typeof property.value.value == 'string') {
+                            controllerAsProperty = property.value.value;
                             foundTemplateUrlProp = true;
                         }
                     }
 
-                    if (foundControllerProp && foundTemplateUrlProp) {
-                        routers.push({
-                            controller: controllerProp,
-                            templateUrl: templateUrlProp
-                        });
+                    if ((foundControllerProp && foundTemplateUrlProp) || foundControllerAsProp) {
+                        routers.push(new route(controllerProperty, templateUrlProperty, controllerAsProperty));
                     }
                 }
             }
