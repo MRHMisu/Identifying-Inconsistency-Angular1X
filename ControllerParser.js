@@ -45,35 +45,14 @@ function variable(name, value, type, lineNumber) {
     this.lineNumber = lineNumber;
 }
 
-
-function singleVariableInController(name, value, dataType) {
-    this.name = name;
-    this.value = value;
-    this.dataType = dataType;
-
-}
-
-function objectVariableInController(name, properties, dataType) {
-    this.name = name;
-    this.properties = properties;
-    this.dataType = dataType;
-}
-
-function property(name, value, type) {
-    this.name = name;
-    this.value = value;
-    this.type = type;
-}
-
-
 function getJavaScriptCode() {
     var jsRawCode = document.getElementById('textEditor').value;
-    var ast = esprima.parse(jsRawCode, {loc: true});
+    var ast = esprima.parse(jsRawCode, {loc: true,tokens: true});
     estraverse.traverse(ast, {
         enter: function (node, parent) {
             isViewModelThisExpression(node);
-            isViewModelAssignmentExpression(node);
-            isFunctionExpressionAndDeclaration(node);
+            getViewModelVariables(node);
+            getAllFunctionalExpression(node);
             isCalleeExpression(node);
 
         }
@@ -87,6 +66,13 @@ function getControllerFunctionListFromModelAssingmentVariable()
     {
         var regx='/'+functionList[i].name+'/g';
         var regxObj=eval(regx);
+        for(var j=0; j<modelVariablesList.length;j++)
+        {
+            if(regxObj.exec(modelVariablesList[j].value))
+            {
+                controllerFunctionList.push(functionList[i]);
+            }
+        }
 
     }
 
@@ -119,7 +105,7 @@ function isViewModelThisExpression(node) {
  level 3
  vm.FirstYear.student.name='misu'
  */
-function isViewModelAssignmentExpression(node) {
+function getViewModelVariables(node) {
     if (node.type == 'AssignmentExpression') {
         if (node.operator == '=') {
             if (node.left.object && node.left.type == 'MemberExpression') {
@@ -201,7 +187,7 @@ function getAssignmentValueFromRightSide(viewModelIdentifier, node) {
  * }
  *
  * */
-function isFunctionExpressionAndDeclaration(node) {
+function getAllFunctionalExpression(node) {
     if (node.type == 'FunctionExpression' || node.type == 'FunctionDeclaration') {
         var functionName = node.id ? node.id.name : "anonymous_functions";
         var startLineNumber=node.loc.start.line;
@@ -217,7 +203,7 @@ function isFunctionExpressionAndDeclaration(node) {
                 returnExpression = node.body.body[length - 1].argument;
                 var functionInternalVariableList = [];
                 for (var i = 0; i < functionBody.length; i++) {
-                    var identifierObject=getInternalFunctionDeclareVariableNameAndType(functionBody[i]);
+                    var identifierObject=getInternalFunctionDeclareVariables(functionBody[i]);
                     if(identifierObject){
                         functionInternalVariableList.push(identifierObject);
                     }
@@ -236,7 +222,7 @@ function isFunctionExpressionAndDeclaration(node) {
                 {
                     var functionInternalAssingmentVariableList = [];
                     for (var k = 0; k < functionBody.length; k++) {
-                        var identifier=internalFunctionVariableAssingment(functionBody[k]);
+                        var identifier=getInternalFunctionAssignedVariables(functionBody[k]);
                         if(identifier){
                             functionInternalAssingmentVariableList.push(identifier);
                         }
@@ -273,7 +259,7 @@ function isFunctionExpressionAndDeclaration(node) {
  *   roll:'0516'
  * }
  * */
-function getInternalFunctionDeclareVariableNameAndType(node) {
+function getInternalFunctionDeclareVariables(node) {
     if (node.type == 'VariableDeclaration') {
         var declarations = node.declarations;
         for (var i = 0; i < declarations.length; i++) {
@@ -334,7 +320,7 @@ function getInternalFunctionDeclareVariableNameAndType(node) {
  * }
  *
  * */
-function internalFunctionVariableAssingment(node) {
+function getInternalFunctionAssignedVariables(node) {
     if(node.type =="ExpressionStatement")
     {
         if (node.expression.type == 'AssignmentExpression' && node.expression.operator == '=') {
@@ -429,7 +415,7 @@ function isCalleeExpression(node) {
             var arguments = node.arguments;
             calleeExpression.push({'name': objectName, 'propertyName': propertyName, 'arguments': arguments});
         } else if (node.callee.type == 'FunctionExpression') {
-            isFunctionExpressionAndDeclaration(node.callee);
+            getAllFunctionalExpression(node.callee);
         } else {
             var name = node.callee.name;
             var arg = node.arguments;

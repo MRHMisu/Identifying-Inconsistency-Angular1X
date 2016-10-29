@@ -11,17 +11,18 @@ var modelVariables = [];
 var controllerFunctions = [];
 var ngRepeatElements = [];
 
-function ModelVariableInView(directive, dataType, modelVariableName) {
+function ModelVariableInView(directive, dataType,lineNumber, modelVariableName) {
     this.directive = directive;
     this.dataType = dataType;
+    this.lineNumber=lineNumber;
     this.modelVariableName = modelVariableName;
 
 }
-function ControllerFunctionInView(directive, dataType, controllerFunctionName) {
+function ControllerFunctionInView(directive, dataType, controllerFunctionName,lineNumber) {
     this.directive = directive;
     this.dataType = dataType;
     this.controllerFunctionName = controllerFunctionName;
-
+    this.lineNumber=lineNumber;
 }
 function NG_ReapteElementsInView(arrayName, alice, value) {
     this.arrayName = arrayName;
@@ -37,14 +38,29 @@ function getHTMLCode() {
     var htmlParser = new DOMParser();
     var parsedDOM = htmlParser.parseFromString(htmlRawCode, "text/html");
 
-    getModelVariables(parsedDOM);
-    getControllerFunctions(parsedDOM);
-    getNGRepeatElements(parsedDOM);
+    getModelVariables(parsedDOM,htmlRawCode);
+    getControllerFunctions(parsedDOM,htmlRawCode);
+    getNGRepeatElements(parsedDOM,htmlRawCode);
     getAngularExpressionDirective(htmlRawCode, parsedDOM);
+}
+
+
+function getLineNumberOfTheSignature(signature,htmlRawCode)
+{
+    var splitedHtmlRawCode=htmlRawCode.split("\n");
+    for(var i=0; i<splitedHtmlRawCode.length;i++)
+    {
+        if(splitedHtmlRawCode[i].includes(signature))
+        {
+            var lineNumber=i+1;
+            return lineNumber;
+        }
+    }
+
+
 
 
 }
-
 
 function getAngularExpressionDirective(htmlRawCode, parsedDOM) {
     //get all angular Expression {{*}}
@@ -98,7 +114,7 @@ function getAttributeValueRegularExpression(value) {
     return expression;
 }
 
-function getNGRepeatElements(parsedDOM) {
+function getNGRepeatElements(parsedDOM,htmlRawCode) {
     var allNgRepeatElement = parsedDOM.querySelectorAll("[ng-repeat]");
     for (var i = 0; i < allNgRepeatElement.length; i++) {
         element = allNgRepeatElement[i].getAttribute('ng-repeat');
@@ -115,7 +131,7 @@ function getNGRepeatElements(parsedDOM) {
 
 }
 
-function getModelVariables(parsedDOM) {
+function getModelVariables(parsedDOM,htmlRawCode) {
     for (var i = 0; i < angularAttributeDirectivesForModelValue.length; i++) {
         var directive = angularAttributeDirectivesForModelValue[i];
         var elements = parsedDOM.querySelectorAll('[' + directive.signature + ']');
@@ -123,7 +139,10 @@ function getModelVariables(parsedDOM) {
         if (elements != null && elements.length > 0) {
             for (var j = 0; j < elements.length; j++) {
                 var directiveAttributeModelValue = elements[j].getAttribute(directive.signature);
-                modelVariables.push(new ModelVariableInView(directive.signature, directive.acceptedDatatype, directiveAttributeModelValue.replace(/{{/g, '').replace(/}}/g, '').trim()));
+
+                var lineNumberSignature=directive.signature+'='+'"'+directiveAttributeModelValue+'"';
+                var lineNumber=getLineNumberOfTheSignature(lineNumberSignature,htmlRawCode);
+                modelVariables.push(new ModelVariableInView(directive.signature, directive.acceptedDatatype,lineNumber ,directiveAttributeModelValue.replace(/{{/g, '').replace(/}}/g, '').trim()));
 
             }
         }
@@ -131,15 +150,17 @@ function getModelVariables(parsedDOM) {
 
 }
 
-function getControllerFunctions(parsedDOM) {
+function getControllerFunctions(parsedDOM,htmlRawCode) {
     for (var i = 0; i < angularAttributeDirectiveForControllerFunctions.length; i++) {
         var directiveCF = angularAttributeDirectiveForControllerFunctions[i];
         var elements = parsedDOM.querySelectorAll('[' + directiveCF.signature + ']');
         if (elements != null && elements.length > 0) {
             for (var j = 0; j < elements.length; j++) {
-                var directiveAttributeControllerFunctionValue = elements[j].getAttribute(directiveCF.signature);
+                var directiveAttributeCFValue = elements[j].getAttribute(directiveCF.signature);
 
-                controllerFunctions.push(new ControllerFunctionInView(directiveCF.signature, directiveCF.acceptedDatatype, directiveAttributeControllerFunctionValue));
+                var lineNumberSignature=directiveCF.signature+'='+'"'+directiveAttributeCFValue+'"';
+                var lineNumber=getLineNumberOfTheSignature(lineNumberSignature,htmlRawCode);
+                controllerFunctions.push(new ControllerFunctionInView(directiveCF.signature, directiveCF.acceptedDatatype, directiveAttributeCFValue,lineNumber));
 
             }
         }
