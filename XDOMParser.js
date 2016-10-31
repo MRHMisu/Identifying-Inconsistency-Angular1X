@@ -5,7 +5,7 @@
  * Created by Misu Be Imp on 6/9/2016.
  */
 
-
+var XMLDOM=require('xmldom');
 
 var modelVariables = [];
 var controllerFunctions = [];
@@ -31,10 +31,10 @@ function NG_ReapteElementsInView(arrayName, alice, value) {
 
 }
 
-function getHTMLCode() {
+function getHTMLCode(htmlRawCode) {
 
-    var htmlRawCode = document.getElementById('textEditor').value;
-    var htmlParser = new DOMParser();
+    var htmlRawCode = htmlRawCode//document.getElementById('textEditor').value;
+    var htmlParser = XMLDOM.DOMParser();//DOMParser();
     var parsedDOM = htmlParser.parseFromString(htmlRawCode, "text/html");
 
     getModelVariables(parsedDOM, htmlRawCode);

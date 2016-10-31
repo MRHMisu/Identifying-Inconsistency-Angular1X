@@ -1,7 +1,3 @@
-/**
- * Created by Misu Be Imp on 10/29/2016.
- */
-
 var routers = [];
 function route(controller, templateUrl, controllerAs) {
     this.controller = controller;
@@ -29,9 +25,9 @@ function ParseRouteConfigFile(ast) {
                 if (arguments != undefined && arguments[1] != undefined && arguments[1].type != undefined &&
                     arguments[1].type == 'ObjectExpression' && arguments[1].properties != undefined) {
 
-                    var foundControllerProp = false;
-                    var foundTemplateUrlProp = false;
-                    var foundControllerAsProp = false;
+                    var isFoundControllerProperty = false;
+                    var isFoundTemplateUrlProperty = false;
+                    var isFoundControllerAsProperty = false;
                     var controllerProperty = '';
                     var templateUrlProperty = '';
                     var controllerAsProperty = '';
@@ -41,23 +37,23 @@ function ParseRouteConfigFile(ast) {
                             && property.value.type == 'Literal' && property.value.value != undefined
                             && typeof property.value.value == 'string') {
                             controllerProperty = property.value.value;
-                            foundControllerProp = true;
+                            isFoundControllerProperty = true;
                         }
                         else if (property.key.type == 'Identifier' && property.key.name == 'templateUrl'
                             && property.value.type == 'Literal' && property.value.value != undefined
                             && typeof property.value.value == 'string') {
                             templateUrlProperty = property.value.value;
-                            foundTemplateUrlProp = true;
+                            isFoundTemplateUrlProperty = true;
                         }
                         else if (property.key.type == 'Identifier' && property.key.name == 'controllerAs'
                             && property.value.type == 'Literal' && property.value.value != undefined
                             && typeof property.value.value == 'string') {
                             controllerAsProperty = property.value.value;
-                            foundTemplateUrlProp = true;
+                            isFoundTemplateUrlProperty = true;
                         }
                     }
 
-                    if ((foundControllerProp && foundTemplateUrlProp) || foundControllerAsProp) {
+                    if ((isFoundControllerProperty && isFoundTemplateUrlProperty) || isFoundControllerAsProperty) {
                         routers.push(new route(controllerProperty, templateUrlProperty, controllerAsProperty));
                     }
                 }

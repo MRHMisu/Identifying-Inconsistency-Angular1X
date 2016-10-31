@@ -1,11 +1,3 @@
-/**
- * Created by Misu Be Imp on 10/28/2016.
- */
-/**
- * Created by Misu Be Imp on 6/10/2016.
- */
-
-
 var viewModelIdentifier = {};
 var modelVariablesList = [];
 var modelVariableArraylist = [];
@@ -30,13 +22,13 @@ function element(value, type) {
 }
 
 var functionList = [];
-var controllerFunctionList=[];
+var controllerFunctionList = [];
 
-function controllerFunction(name, returnType,startLineNumber,endLineNumber) {
+function controllerFunction(name, returnType, startLineNumber, endLineNumber) {
     this.name = name;
     this.returnType = returnType;
-    this.startLineNumber=startLineNumber;
-    this.endLineNumber=endLineNumber;
+    this.startLineNumber = startLineNumber;
+    this.endLineNumber = endLineNumber;
 }
 function variable(name, value, type, lineNumber) {
     this.name = name;
@@ -47,7 +39,7 @@ function variable(name, value, type, lineNumber) {
 
 function getJavaScriptCode() {
     var jsRawCode = document.getElementById('textEditor').value;
-    var ast = esprima.parse(jsRawCode, {loc: true,tokens: true});
+    var ast = esprima.parse(jsRawCode, {loc: true, tokens: true});
     estraverse.traverse(ast, {
         enter: function (node, parent) {
             isViewModelThisExpression(node);
@@ -60,16 +52,12 @@ function getJavaScriptCode() {
     getControllerFunctionListFromModelAssingmentVariable();
 }
 
-function getControllerFunctionListFromModelAssingmentVariable()
-{
-    for(var i=0; i<functionList.length;i++)
-    {
-        var regx='/'+functionList[i].name+'/g';
-        var regxObj=eval(regx);
-        for(var j=0; j<modelVariablesList.length;j++)
-        {
-            if(regxObj.exec(modelVariablesList[j].value))
-            {
+function getControllerFunctionListFromModelAssingmentVariable() {
+    for (var i = 0; i < functionList.length; i++) {
+        var regx = '/' + functionList[i].name + '/g';
+        var regxObj = eval(regx);
+        for (var j = 0; j < modelVariablesList.length; j++) {
+            if (regxObj.exec(modelVariablesList[j].value)) {
                 controllerFunctionList.push(functionList[i]);
             }
         }
@@ -190,48 +178,47 @@ function getAssignmentValueFromRightSide(viewModelIdentifier, node) {
 function getAllFunctionalExpression(node) {
     if (node.type == 'FunctionExpression' || node.type == 'FunctionDeclaration') {
         var functionName = node.id ? node.id.name : "anonymous_functions";
-        var startLineNumber=node.loc.start.line;
-        var endLineNumber=node.loc.end.line;
+        var startLineNumber = node.loc.start.line;
+        var endLineNumber = node.loc.end.line;
 
         var functionBody = node.body.body;
         var length = node.body.body.length;
         var returnExpression;
         var returnedType = 'void';
-        var returnTypeIdentifier='';
+        var returnTypeIdentifier = '';
         if (length > 0) {
             if (node.body.body[length - 1].type == "ReturnStatement") {
                 returnExpression = node.body.body[length - 1].argument;
                 var functionInternalVariableList = [];
                 for (var i = 0; i < functionBody.length; i++) {
-                    var identifierObject=getInternalFunctionDeclareVariables(functionBody[i]);
-                    if(identifierObject){
+                    var identifierObject = getInternalFunctionDeclareVariables(functionBody[i]);
+                    if (identifierObject) {
                         functionInternalVariableList.push(identifierObject);
                     }
 
                 }
-                var returnRegEx='/'+returnExpression.name+'/g';
-                var returnTypeIdentifier =eval(returnRegEx);
+                var returnRegEx = '/' + returnExpression.name + '/g';
+                var returnTypeIdentifier = eval(returnRegEx);
                 for (var j = 0; j < functionInternalVariableList.length; j++) {
                     if (returnTypeIdentifier.exec(functionInternalVariableList[j].name)) {
-                        returnTypeIdentifier=functionInternalVariableList[j].name;
+                        returnTypeIdentifier = functionInternalVariableList[j].name;
                         returnedType = functionInternalVariableList[j].type;
                     }
 
                 }
-                if(returnedType==null)
-                {
+                if (returnedType == null) {
                     var functionInternalAssingmentVariableList = [];
                     for (var k = 0; k < functionBody.length; k++) {
-                        var identifier=getInternalFunctionAssignedVariables(functionBody[k]);
-                        if(identifier){
+                        var identifier = getInternalFunctionAssignedVariables(functionBody[k]);
+                        if (identifier) {
                             functionInternalAssingmentVariableList.push(identifier);
                         }
                     }
-                    var regEx='/'+returnTypeIdentifier+'/g';
-                    var returnIdentifierRegEx =eval(regEx);
+                    var regEx = '/' + returnTypeIdentifier + '/g';
+                    var returnIdentifierRegEx = eval(regEx);
                     for (var l = 0; l < functionInternalAssingmentVariableList.length; l++) {
                         if (returnIdentifierRegEx.exec(functionInternalAssingmentVariableList[l].name)) {
-                            returnTypeIdentifier=functionInternalAssingmentVariableList[l].name;
+                            returnTypeIdentifier = functionInternalAssingmentVariableList[l].name;
                             returnedType = functionInternalAssingmentVariableList[l].type;
                         }
                     }
@@ -239,7 +226,7 @@ function getAllFunctionalExpression(node) {
             }
         }
 
-        functionList.push(new controllerFunction(functionName, returnedType,startLineNumber,endLineNumber));
+        functionList.push(new controllerFunction(functionName, returnedType, startLineNumber, endLineNumber));
     }
 
 }
@@ -274,7 +261,7 @@ function getInternalFunctionDeclareVariables(node) {
                     if (declarations[i].init.type == 'ObjectExpression') {
                         var objectProperties = new Array();
                         for (var j = 0; j < declarations[i].init.properties.length; j++) {
-                            var name = declarations[i].init.properties[j].key.value;
+                            var name = declarations[i].init.properties[j].key.name;
                             var value = declarations[i].init.properties[j].value.value;
                             var type = typeof value;
                             objectProperties.push(new property(name, value, type));
@@ -302,7 +289,7 @@ function getInternalFunctionDeclareVariables(node) {
                 }
                 else {
                     var variableValue = 'uninitialized';
-                    var variableDataType =null;
+                    var variableDataType = null;
                     return {name: variableName, type: variableDataType};
                 }
             }
@@ -321,8 +308,7 @@ function getInternalFunctionDeclareVariables(node) {
  *
  * */
 function getInternalFunctionAssignedVariables(node) {
-    if(node.type =="ExpressionStatement")
-    {
+    if (node.type == "ExpressionStatement") {
         if (node.expression.type == 'AssignmentExpression' && node.expression.operator == '=') {
             if (node.expression.left.type == 'Identifier') {
                 var variableName = node.expression.left.name;
@@ -421,134 +407,11 @@ function isCalleeExpression(node) {
             var arg = node.arguments;
             calleeExpression.push({'name': name, 'arguments': arg});
         }
-
-
-    }
-
-
-}
-
-
-/*
- *Name="Misu";
- * roll=0516;
- * student=
- * {
- *   name:'misu',
- *   class:'FirstYear',
- *   roll:'5016'
- * }
- *
- * */
-
-function isAssignmentExpression(node) {
-    if (node.type == 'AssignmentExpression' && node.operator == '=') {
-        if (node.left.type == 'Identifier') {
-            var arsingName = node.left.name;
-            if (node.right.type == 'Literal') {
-                var variableValue = node.right.value;
-                var variableDataType = typeof variableValue;
-
-                return new singleVariableInController(arsingName, variableValue, variableDataType);
-            }
-            if (node.right.type == 'Identifier') {
-                var variableValue = node.right.value;
-                var variableDataType = typeof variableValue;
-
-                return new singleVariableInController(arsingName, variableValue, variableDataType);
-            }
-            if (node.right.type == 'ObjectExpression') {
-                var objectProperties = new Array();
-                for (var j = 0; j < node.right.properties.length; j++) {
-                    var name = node.right.properties[j].key.name;
-                    var value = node.right.properties[j].value.value;
-                    var type = typeof value;
-                    objectProperties.push(new property(name, value, type));
-                }
-                return new modelVariable(arsingName, objectProperties, 'assignedObject');
-            }
-            if (node.right.type == 'ArrayExpression') {
-                var elements = node.right.elements;
-                var elementProperties = new Array();
-                for (var k = 0; k < elements.length; k++) {
-                    var value = elements[k].value;
-                    var type = typeof value;
-                    elementProperties.push(new element(value, type));
-                }
-                return new arrayVariableInController(arsingName, elementProperties)
-            }
-            if (node.right.type == 'CallExpression') {
-                //ToDo
-            }
-        }
     }
 }
 
 
-/*all initialize and uninitialized variable
- * var m;(null initialization)
- * or var m,j,k;(multiple null initialization)
- *
- * var m=0; or var m=0,j="misu";(primary initialization)
- *
- * var m=[1,2,3,4]; (Array initialization)
- *
- * (object initialization)
- * var student=
- * {
- *   name:'misu',
- *   class:'FirstYear',
- *   roll:'0516'
- * }
- * */
 
-function isVariableDeclarationWithInitialization(node) {
-    if (node.type == 'VariableDeclaration') {
-        var declarations = node.declarations;
-        for (var i = 0; i < declarations.length; i++) {
-            if (declarations[i].type == 'VariableDeclarator') {
-                var variableName = declarations[i].id.name;
-                if (declarations[i].init) {
-                    if (declarations[i].init.type == 'ObjectExpression') {
-                        var objectProperties = new Array();
-                        for (var j = 0; j < declarations[i].init.properties.length; j++) {
-                            var name = declarations[i].init.properties[j].key.value;
-                            var value = declarations[i].init.properties[j].value.value;
-                            var type = typeof value;
-                            objectProperties.push(new property(name, value, type));
-                        }
-                        return new modelVariable(variableName, objectProperties, 'objectType');
-                    }
-                    if (declarations[i].init.type == 'ArrayExpression') {
-
-                        var elements = declarations[i].init.elements;
-                        var elementProperties = new Array();
-                        for (var k = 0; k < elements.length; k++) {
-                            var value = elements[k].value;
-                            var type = typeof value;
-                            elementProperties.push(new element(value, type));
-                        }
-                        return new arrayVariableInController(variableName, elementProperties);
-                    }
-                    if (declarations[i].init.type == 'Literal') {
-                        var variableValue = declarations[i].init ? declarations[i].init.value : 'uninitialized';
-                        var variableDataType = declarations[i].init ? typeof declarations[i].init.value : 'none';
-                        return new singleVariableInController(variableName, variableValue, variableDataType);
-                    }
-                    if (declarations[i].init.type == 'CallExpression') {
-
-                        //ToDo
-                    }
-                }
-                else {
-                    var variableValue = 'uninitialized';
-                    var variableDataType = 'null';
-                    return new singleVariableInController(variableName, variableValue, variableDataType);
-                }
-            }
-        }
-    }
-}
 
 
 
