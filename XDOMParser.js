@@ -5,11 +5,32 @@
  * Created by Misu Be Imp on 6/9/2016.
  */
 
-var XMLDOM=require('xmldom');
+var DOMParser = require('xmldom').DOMParser;
+var angularDirectives = require('./angularDirectiveListForNode.js');
+
+
+module.exports.getParsedView = getParsedView;
+var angularAttributeDirectiveForControllerFunctions;
+var angularAttributeDirectivesForModelValue;
+
+function getParsedView(htmlRawCode) {
+
+    angularAttributeDirectiveForControllerFunctions = angularDirectives.getAngularAttributeDirectivesForModelValue();
+    angularAttributeDirectivesForModelValue = angularDirectives.getAngularAttributeDirectiveForControllerFunctionsList();
+
+    getHTMLCode(htmlRawCode);
+    return {
+        'modelvariables': modelVariables,
+        'controllerFunctions': controllerFunctions,
+        'ngRepeatElements': ngRepeatElements
+    }
+}
+
 
 var modelVariables = [];
 var controllerFunctions = [];
 var ngRepeatElements = [];
+
 
 function ModelVariableInView(directive, dataType, lineNumber, modelVariableName) {
     this.directive = directive;
@@ -34,9 +55,8 @@ function NG_ReapteElementsInView(arrayName, alice, value) {
 function getHTMLCode(htmlRawCode) {
 
     var htmlRawCode = htmlRawCode//document.getElementById('textEditor').value;
-    var htmlParser = XMLDOM.DOMParser();//DOMParser();
-    var parsedDOM = htmlParser.parseFromString(htmlRawCode, "text/html");
-
+    console.log(htmlRawCode);
+    var parsedDOM = new DOMParser().parseFromString(htmlRawCode, "text/html");
     getModelVariables(parsedDOM, htmlRawCode);
     getControllerFunctions(parsedDOM, htmlRawCode);
     getNGRepeatElements(parsedDOM, htmlRawCode);
@@ -45,13 +65,17 @@ function getHTMLCode(htmlRawCode) {
 
 
 function getLineNumberOfTheSignature(signature, htmlRawCode) {
+    var lineNumber = [];
     var splitedHtmlRawCode = htmlRawCode.split("\n");
     for (var i = 0; i < splitedHtmlRawCode.length; i++) {
         if (splitedHtmlRawCode[i].includes(signature)) {
-            var lineNumber = i + 1;
-            return lineNumber;
+            var lineNo = i + 1;
+            return lineNo;
+            //lineNumber.push(lineNo);
         }
     }
+    //return lineNumber;
+
 }
 
 function getAngularExpressionDirective(htmlRawCode, parsedDOM) {
@@ -71,11 +95,11 @@ function getAngularExpressionDirective(htmlRawCode, parsedDOM) {
             var array = attributeValue.split("=");
             var attribute = array[0];
             var value = array[1];
-            for (var j = 0; j < angularAttributeDirectivesForModelValue.length; j++) {
+            for (var j = 0; j < htmlRawCode.length; j++) {
                 var regModelDirective = angularAttributeDirectivesForModelValue[j].signature;
                 var matchModelDirective = eval('/' + regModelDirective + '/g');
                 if (matchModelDirective.exec(attribute)) {
-                    var modelDirective = angularAttributeDirectivesForModelValue[j];
+                    var modelDirective = htmlRawCode[j];
                     var attributeModelValue = value;
                     modelVariables.push(new ModelVariableInView(modelDirective.signature, modelDirective.acceptedDatatype, attributeModelValue));
 
@@ -97,6 +121,19 @@ function getAngularExpressionDirective(htmlRawCode, parsedDOM) {
 
 }
 
+function getElementsByAttribute(parsedDOM, attribute) {
+    var nodeList = parsedDOM.getElementsByTagName('*');
+    var nodeArray = [];
+    var iterator = 0;
+    var node = null;
+
+    while (node = nodeList[iterator++]) {
+        if (node.hasAttribute(attribute)) nodeArray.push(node);
+    }
+
+    return nodeArray;
+}
+
 
 function getAttributeValueRegularExpression(value) {
     var firstExpression = '/' + 'ng-' + '\\w*="{{(';
@@ -107,17 +144,20 @@ function getAttributeValueRegularExpression(value) {
 }
 
 function getNGRepeatElements(parsedDOM, htmlRawCode) {
-    var allNgRepeatElement = parsedDOM.querySelectorAll("[ng-repeat]");
-    for (var i = 0; i < allNgRepeatElement.length; i++) {
-        element = allNgRepeatElement[i].getAttribute('ng-repeat');
-        var ngRepeatExpression = element.split("in");
-        var alice = ngRepeatExpression[0].trim();
-        var modelVariableArray = ngRepeatExpression[1].trim();
-        var ngRepeatElement = traversDomNodes(allNgRepeatElement[i], new Array(), allNgRepeatElement[i]);
-        for (var l = 0; l < ngRepeatElement.length; l++) {
-            //replace
-            var replacedElement = ngRepeatElement[l].replace(alice, modelVariableArray);
-            ngRepeatElements.push(new NG_ReapteElementsInView(modelVariableArray, alice, replacedElement));
+    //var allNgRepeatElement = parsedDOM.querySelectorAll("[ng-repeat]");
+    var allNgRepeatElement = getElementsByAttribute(parsedDOM, 'ng-repeat');
+    if (allNgRepeatElement != null && allNgRepeatElement.length > 0) {
+        for (var i = 0; i < allNgRepeatElement.length; i++) {
+            var element = allNgRepeatElement[i].getAttribute('ng-repeat');
+            var ngRepeatExpression = element.split("in");
+            var alice = ngRepeatExpression[0].trim();
+            var modelVariableArray = ngRepeatExpression[1].trim();
+            var ngRepeatElement = traversDomNodes(allNgRepeatElement[i], new Array(), allNgRepeatElement[i]);
+            for (var l = 0; l < ngRepeatElement.length; l++) {
+                //replace
+                var replacedElement = ngRepeatElement[l].replace(alice, modelVariableArray);
+                ngRepeatElements.push(new NG_ReapteElementsInView(modelVariableArray, alice, replacedElement));
+            }
         }
     }
 
@@ -126,33 +166,35 @@ function getNGRepeatElements(parsedDOM, htmlRawCode) {
 function getModelVariables(parsedDOM, htmlRawCode) {
     for (var i = 0; i < angularAttributeDirectivesForModelValue.length; i++) {
         var directive = angularAttributeDirectivesForModelValue[i];
-        var elements = parsedDOM.querySelectorAll('[' + directive.signature + ']');
-
+        var elements = getElementsByAttribute(parsedDOM, directive.signature);
         if (elements != null && elements.length > 0) {
             for (var j = 0; j < elements.length; j++) {
                 var directiveAttributeModelValue = elements[j].getAttribute(directive.signature);
-
                 var lineNumberSignature = directive.signature + '=' + '"' + directiveAttributeModelValue + '"';
                 var lineNumber = getLineNumberOfTheSignature(lineNumberSignature, htmlRawCode);
-                modelVariables.push(new ModelVariableInView(directive.signature, directive.acceptedDatatype, lineNumber, directiveAttributeModelValue.replace(/{{/g, '').replace(/}}/g, '').trim()));
+               // for (var j = 0; j < lineNumber; j++) {
+                    modelVariables.push(new ModelVariableInView(directive.signature, directive.acceptedDatatype, lineNumber, directiveAttributeModelValue.replace(/{{/g, '').replace(/}}/g, '').trim()));
+
+                //}
 
             }
         }
     }
-
 }
 
 function getControllerFunctions(parsedDOM, htmlRawCode) {
     for (var i = 0; i < angularAttributeDirectiveForControllerFunctions.length; i++) {
         var directiveCF = angularAttributeDirectiveForControllerFunctions[i];
-        var elements = parsedDOM.querySelectorAll('[' + directiveCF.signature + ']');
+        var elements = getElementsByAttribute(parsedDOM, directiveCF.signature);
         if (elements != null && elements.length > 0) {
             for (var j = 0; j < elements.length; j++) {
                 var directiveAttributeCFValue = elements[j].getAttribute(directiveCF.signature);
 
                 var lineNumberSignature = directiveCF.signature + '=' + '"' + directiveAttributeCFValue + '"';
                 var lineNumber = getLineNumberOfTheSignature(lineNumberSignature, htmlRawCode);
-                controllerFunctions.push(new ControllerFunctionInView(directiveCF.signature, directiveCF.acceptedDatatype, directiveAttributeCFValue, lineNumber));
+                //for (var j = 0; j < lineNumber; j++) {
+                    controllerFunctions.push(new ControllerFunctionInView(directiveCF.signature, directiveCF.acceptedDatatype, directiveAttributeCFValue, lineNumber));
+                //}
 
             }
         }
