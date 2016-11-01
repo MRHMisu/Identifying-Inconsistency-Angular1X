@@ -16,7 +16,10 @@ function readData(error, data) {
     for (var i = 0; i < list.modelvariables.length; i++) {
         console.log(list.modelvariables[i]);
     }
-
+    console.log(list.controllerFunctions.length);
+    for (var i = 0; i < list.controllerFunctions.length; i++) {
+        console.log(list.controllerFunctions[i]);
+    }
 }
 
 
