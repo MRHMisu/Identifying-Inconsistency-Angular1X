@@ -13,6 +13,8 @@ function angularAttributeDirective(signature, acceptedDataType) {
     this.acceptedDatatype = acceptedDataType;
 };
 
+
+
 var enumDataType = {
     UNKNOWN: 'unknown',
     MIX: 'mix', //Used for multiple assigned types to model variables in a controller
@@ -21,6 +23,21 @@ var enumDataType = {
     STRING: 'string',
     BOOLEAN: 'boolean'
 };
+
+function getLineNumberForModelDirective(htmlRawCode)
+{
+    var attributeDirectivesForModelValue=angularAttributeDirectivesForModelValue();
+    var lineNumber = [];
+    var splitedHtmlRawCode = htmlRawCode.split("\n");
+    for (var i = 0; i < splitedHtmlRawCode.length; i++) {
+        if (splitedHtmlRawCode[i].includes(signature)>0) {
+            var lineNo = i + 1;
+            // return lineNo;
+            lineNumber.push(lineNo);
+        }
+    }
+    return lineNumber;
+}
 
 
 function getAngularAttributeDirectivesForModelValue() {

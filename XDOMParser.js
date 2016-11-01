@@ -39,6 +39,17 @@ function ModelVariableInView(directive, dataType, lineNumber, modelVariableName)
     this.modelVariableName = modelVariableName;
 
 }
+
+function compareToModelVariableInView(objOne, objTwo) {
+    if (objOne.directive === objTwo.directive)return true;
+    else if (objOne.directive === objTwo.dataType)return true;
+    else if (objOne.directive === objTwo.lineNumber)return true;
+    else if (objOne.directive === objTwo.modelVariableName)return true;
+    return false;
+}
+
+
+
 function ControllerFunctionInView(directive, dataType, controllerFunctionName, lineNumber) {
     this.directive = directive;
     this.dataType = dataType;
@@ -54,13 +65,14 @@ function NG_ReapteElementsInView(arrayName, alice, value) {
 
 function getHTMLCode(htmlRawCode) {
 
-    var htmlRawCode = htmlRawCode//document.getElementById('textEditor').value;
-    console.log(htmlRawCode);
+    var htmlRawCode = htmlRawCode;//document.getElementById('textEditor').value;
     var parsedDOM = new DOMParser().parseFromString(htmlRawCode, "text/html");
     getModelVariables(parsedDOM, htmlRawCode);
     getControllerFunctions(parsedDOM, htmlRawCode);
     getNGRepeatElements(parsedDOM, htmlRawCode);
     getAngularExpressionDirective(htmlRawCode, parsedDOM);
+    //modelVariables=removeModelObject(modelVariables);
+
 }
 
 
@@ -68,14 +80,12 @@ function getLineNumberOfTheSignature(signature, htmlRawCode) {
     var lineNumber = [];
     var splitedHtmlRawCode = htmlRawCode.split("\n");
     for (var i = 0; i < splitedHtmlRawCode.length; i++) {
-        if (splitedHtmlRawCode[i].includes(signature)) {
+        if (splitedHtmlRawCode[i].includes(signature) > 0) {
             var lineNo = i + 1;
-            return lineNo;
-            //lineNumber.push(lineNo);
+            lineNumber.push(lineNo);
         }
     }
-    //return lineNumber;
-
+    return lineNumber;
 }
 
 function getAngularExpressionDirective(htmlRawCode, parsedDOM) {
@@ -172,10 +182,10 @@ function getModelVariables(parsedDOM, htmlRawCode) {
                 var directiveAttributeModelValue = elements[j].getAttribute(directive.signature);
                 var lineNumberSignature = directive.signature + '=' + '"' + directiveAttributeModelValue + '"';
                 var lineNumber = getLineNumberOfTheSignature(lineNumberSignature, htmlRawCode);
-               // for (var j = 0; j < lineNumber; j++) {
-                    modelVariables.push(new ModelVariableInView(directive.signature, directive.acceptedDatatype, lineNumber, directiveAttributeModelValue.replace(/{{/g, '').replace(/}}/g, '').trim()));
+                for (var k = 0; k < lineNumber.length; k++) {
+                    modelVariables.push(new ModelVariableInView(directive.signature, directive.acceptedDatatype, lineNumber[k], directiveAttributeModelValue.replace(/{{/g, '').replace(/}}/g, '').trim()));
 
-                //}
+                }
 
             }
         }
@@ -189,12 +199,11 @@ function getControllerFunctions(parsedDOM, htmlRawCode) {
         if (elements != null && elements.length > 0) {
             for (var j = 0; j < elements.length; j++) {
                 var directiveAttributeCFValue = elements[j].getAttribute(directiveCF.signature);
-
                 var lineNumberSignature = directiveCF.signature + '=' + '"' + directiveAttributeCFValue + '"';
                 var lineNumber = getLineNumberOfTheSignature(lineNumberSignature, htmlRawCode);
-                //for (var j = 0; j < lineNumber; j++) {
-                    controllerFunctions.push(new ControllerFunctionInView(directiveCF.signature, directiveCF.acceptedDatatype, directiveAttributeCFValue, lineNumber));
-                //}
+                for (var k = 0; k < lineNumber.length; k++) {
+                    controllerFunctions.push(new ControllerFunctionInView(directiveCF.signature, directiveCF.acceptedDatatype, directiveAttributeCFValue, lineNumber[k]));
+                }
 
             }
         }

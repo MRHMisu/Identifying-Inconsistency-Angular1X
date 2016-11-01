@@ -13,8 +13,10 @@ function readData(error, data) {
     var viewData = data;
     var list = test.getParsedView(viewData);
     console.log(list.modelvariables.length);
-    console.log(list.controllerFunctions.length);
-
+    for (var i = 0; i < list.modelvariables.length; i++) {
+        console.log(list.modelvariables[i]);
+    }
 
 }
+
 
