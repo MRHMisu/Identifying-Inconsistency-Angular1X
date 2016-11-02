@@ -15,8 +15,8 @@ var angularAttributeDirectivesForModelValue;
 
 function getParsedView(htmlRawCode) {
 
-    angularAttributeDirectiveForControllerFunctions = angularDirectives.getAngularAttributeDirectivesForModelValue();
-    angularAttributeDirectivesForModelValue = angularDirectives.getAngularAttributeDirectiveForControllerFunctionsList();
+    angularAttributeDirectiveForControllerFunctions = angularDirectives.getAngularAttributeDirectiveForControllerFunctionsList();
+    angularAttributeDirectivesForModelValue= angularDirectives.getAngularAttributeDirectivesForModelValue();
 
     getHTMLCode(htmlRawCode);
     return {
@@ -154,7 +154,6 @@ function getAttributeValueRegularExpression(value) {
 }
 
 function getNGRepeatElements(parsedDOM, htmlRawCode) {
-    //var allNgRepeatElement = parsedDOM.querySelectorAll("[ng-repeat]");
     var allNgRepeatElement = getElementsByAttribute(parsedDOM, 'ng-repeat');
     if (allNgRepeatElement != null && allNgRepeatElement.length > 0) {
         for (var i = 0; i < allNgRepeatElement.length; i++) {

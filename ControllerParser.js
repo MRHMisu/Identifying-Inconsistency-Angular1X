@@ -3,10 +3,10 @@ var modelVariablesList = [];
 var modelVariableArraylist = [];
 
 
-function modelVariable(name, value, type, lineNumber) {
-    this.name = name;
+function modelVariable(modelVariableName, value, dataType, lineNumber) {
+    this.modelVariableName = modelVariableName;
     this.value = value;
-    this.type = type;
+    this.dataType = dataType;
     this.lineNumber = lineNumber;
 }
 function modelVariableArray(identiferName, singularName, elementProperties, lineNumber) {
@@ -24,8 +24,8 @@ function element(value, type) {
 var functionList = [];
 var controllerFunctionList = [];
 
-function controllerFunction(name, returnType, startLineNumber, endLineNumber) {
-    this.name = name;
+function controllerFunction(controllerFunctionName, returnType, startLineNumber, endLineNumber) {
+    this.controllerFunctionName = controllerFunctionName;
     this.returnType = returnType;
     this.startLineNumber = startLineNumber;
     this.endLineNumber = endLineNumber;
