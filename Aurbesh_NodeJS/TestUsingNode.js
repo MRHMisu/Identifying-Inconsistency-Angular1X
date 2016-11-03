@@ -4,14 +4,14 @@
 
 
 var fileSystem = require('fs');
-var viewParser = require('./ViewParser_NodeJS');
-var controllerParser = require('./ControllerParser_NodeJS');
+var viewParser = require('./ViewParser_Module/ViewParser_NodeJS');
+var controllerParser = require('./ControllerParser_Module/ControllerParser_NodeJS');
 
 var viewData = fileSystem.readFileSync('demoview.txt').toString();
 var controllerData = fileSystem.readFileSync('democontroller.txt').toString();
 
-//getView(viewData);
-getController(controllerData);
+getView(viewData);
+//getController(controllerData);
 
 
 function getView(viewData) {
@@ -39,29 +39,8 @@ function getController(controllerData) {
     for (var i = 0; i < Controller.controllerFunctionList.length; i++) {
         console.log(Controller.controllerFunctionList[i]);
     }
-
-
 }
 
-
-/*fileSystem.readFile('demoview.txt', 'utf8', readData);
-
- function readData(error, viewData) {
- if (error) {
- return console.log(error);
- }
- var viewData = viewData;
- var list = test.getParsedView(viewData);
- console.log(list.modelvariables.length);
- for (var i = 0; i < list.modelvariables.length; i++) {
- console.log(list.modelvariables[i]);
- }
- console.log(list.controllerFunctionList.length);
- for (var i = 0; i < list.controllerFunctionList.length; i++) {
- console.log(list.controllerFunctionList[i]);
- }
- }
- }*/
 
 
 

@@ -20,15 +20,15 @@ function getParsedView(htmlRawCode) {
 
     getHTMLCode(htmlRawCode);
     return {
-        'modelvariables': modelVariables,
-        'controllerFunctions': controllerFunctions,
+        'modelVariableList': modelVariableList,
+        'controllerFunctionList': controllerFunctionList,
         'ngRepeatElements': ngRepeatElements
     }
 }
 
 
-var modelVariables = [];
-var controllerFunctions = [];
+var modelVariableList = [];
+var controllerFunctionList = [];
 var ngRepeatElements = [];
 
 
@@ -71,7 +71,7 @@ function getHTMLCode(htmlRawCode) {
     getControllerFunctions(parsedDOM, htmlRawCode);
     getNGRepeatElements(parsedDOM, htmlRawCode);
     getAngularExpressionDirective(htmlRawCode, parsedDOM);
-    //modelVariables=removeModelObject(modelVariables);
+    //viewModel_VariableList=removeModelObject(viewModel_VariableList);
 
 }
 
@@ -111,7 +111,7 @@ function getAngularExpressionDirective(htmlRawCode, parsedDOM) {
                 if (matchModelDirective.exec(attribute)) {
                     var modelDirective = htmlRawCode[j];
                     var attributeModelValue = value;
-                    modelVariables.push(new ModelVariableInView(modelDirective.signature, modelDirective.acceptedDatatype, attributeModelValue));
+                    modelVariableList.push(new ModelVariableInView(modelDirective.signature, modelDirective.acceptedDatatype, attributeModelValue));
 
                 }
             }
@@ -121,7 +121,7 @@ function getAngularExpressionDirective(htmlRawCode, parsedDOM) {
                 if (matchControllerFunctionDirective.exec(attribute)) {
                     var CFDirective = angularAttributeDirectiveForControllerFunctions[k];
                     var attributeCFValue = value;
-                    modelVariables.push(new ControllerFunctionInView(CFDirective.signature, CFDirective.acceptedDatatype, attributeCFValue));
+                    modelVariableList.push(new ControllerFunctionInView(CFDirective.signature, CFDirective.acceptedDatatype, attributeCFValue));
                 }
             }
         }
@@ -182,7 +182,7 @@ function getModelVariables(parsedDOM, htmlRawCode) {
                 var lineNumberSignature = directive.signature + '=' + '"' + directiveAttributeModelValue + '"';
                 var lineNumber = getLineNumberOfTheSignature(lineNumberSignature, htmlRawCode);
                 for (var k = 0; k < lineNumber.length; k++) {
-                    modelVariables.push(new ModelVariableInView(directive.signature, directive.acceptedDatatype, lineNumber[k], directiveAttributeModelValue.replace(/{{/g, '').replace(/}}/g, '').trim()));
+                    modelVariableList.push(new ModelVariableInView(directive.signature, directive.acceptedDatatype, lineNumber[k], directiveAttributeModelValue.replace(/{{/g, '').replace(/}}/g, '').trim()));
 
                 }
 
@@ -201,7 +201,7 @@ function getControllerFunctions(parsedDOM, htmlRawCode) {
                 var lineNumberSignature = directiveCF.signature + '=' + '"' + directiveAttributeCFValue + '"';
                 var lineNumber = getLineNumberOfTheSignature(lineNumberSignature, htmlRawCode);
                 for (var k = 0; k < lineNumber.length; k++) {
-                    controllerFunctions.push(new ControllerFunctionInView(directiveCF.signature, directiveCF.acceptedDatatype, directiveAttributeCFValue, lineNumber[k]));
+                    controllerFunctionList.push(new ControllerFunctionInView(directiveCF.signature, directiveCF.acceptedDatatype, directiveAttributeCFValue, lineNumber[k]));
                 }
 
             }
