@@ -8,8 +8,6 @@ module.exports.element = element;
 module.exports.controllerFunction = controllerFunction;
 module.exports.property = property;
 
-
-
 function modelVariable(modelVariableName, value, dataType, lineNumber) {
     this.modelVariableName = modelVariableName;
     this.value = value;

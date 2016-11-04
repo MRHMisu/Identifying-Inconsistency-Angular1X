@@ -1,4 +1,4 @@
-module.exports.getParsedRoute=getParsedRoute;
+module.exports.getParsedRoute = getParsedRoute;
 
 var esprima = require('esprima');
 var estraverse = require('estraverse');
@@ -11,6 +11,8 @@ function getParsedRoute(routeCode) {
     var routeCode = routeCode;
     var ast = esprima.parse(routeCode, {loc: true, tokens: true});
     ParseRouteConfigFile(ast);
+
+    return routers;
 }
 function ParseRouteConfigFile(ast) {
     estraverse.traverse(ast, {
