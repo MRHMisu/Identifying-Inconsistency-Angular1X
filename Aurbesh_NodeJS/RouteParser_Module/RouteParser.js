@@ -2,7 +2,7 @@ module.exports.getParsedRoute = getParsedRoute;
 
 var esprima = require('esprima');
 var estraverse = require('estraverse');
-var Route_Entity = require('./Controller_Entity.js');
+var Route_Entity = require('./Route_Entity.js');
 
 
 var routers = [];
@@ -58,6 +58,9 @@ function ParseRouteConfigFile(ast) {
                     }
 
                     if ((isFoundControllerProperty && isFoundTemplateUrlProperty) || isFoundControllerAsProperty) {
+
+                        controllerProperty= controllerProperty.replace('Controller','.controller').replace(' ','.')+'.js';
+                        templateUrlProperty=templateUrlProperty.split('/')[1];
                         routers.push(new Route_Entity.route(controllerProperty, templateUrlProperty, controllerAsProperty));
                     }
                 }

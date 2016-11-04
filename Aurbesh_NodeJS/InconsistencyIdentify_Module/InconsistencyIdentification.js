@@ -21,8 +21,11 @@ var modelVariableInView = [{
 
 }];
 
-getInconsistencyInModelVariableList("misu.controller.js",modelVariableInController,"misu.view.js",modelVariableInView);
-//getInconsistencyInControllerFunctionList(CFInController, CFInView);
+var viewName="misu.view.js";
+var controllerName="misu.controller.js";
+
+getInconsistencyInModelVariableList(controllerName,modelVariableInController,CFInView,modelVariableInView);
+getInconsistencyInControllerFunctionList(controllerName,CFInController,viewName, CFInView);
 
 function getInconsistencyInModelVariableList(controllerName, modelVariableInController, viewName, modelVariableInView) {
     for (var i = 0; i < modelVariableInController.length; i++) {

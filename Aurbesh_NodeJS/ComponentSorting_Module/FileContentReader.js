@@ -8,11 +8,6 @@ module.exports.getRequiredFiles = getRequiredFiles;
 var filesystem = require('fs');
 var File_Entity = require('./File_Entity.js');
 
-
-var controllerRegExpression = /(.*).controller.js/g;
-var viewsRegExpression = /(.*).view.js/g;
-var configurationExpression = /(.*).config.js/g;
-
 var controllerFileNamesAndPaths = [];
 var viewFileNamesAndPaths = [];
 var configFileNameAndPath = [];
@@ -38,11 +33,11 @@ function findAllFileNameAndPath(dir) {
         if (stat.isDirectory()) {
             return findAllFileNameAndPath("" + dir + "/" + file);
         }
-        else if (controllerRegExpression.exec(file)) {
+        else if (file.indexOf(".controller.js") > -1) {
             return controllerFileNamesAndPaths.push(new File_Entity.FileNamePath(file, dir + "//" + file));
-        } else if (viewsRegExpression.exec(file)) {
+        } else if (file.indexOf(".view.html") > -1) {
             return viewFileNamesAndPaths.push(new File_Entity.FileNamePath(file, dir + "//" + file));
-        } else if (configurationExpression.exec(file)) {
+        } else if (file.indexOf(".config.js") > -1) {
             return configFileNameAndPath.push(new File_Entity.FileNamePath(file, dir + "//" + file));
         }
     });
