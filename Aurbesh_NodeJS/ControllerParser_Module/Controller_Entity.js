@@ -1,7 +1,3 @@
-/**
- * Created by Misu Be Imp on 11/4/2016.
- */
-
 module.exports.modelVariable = modelVariable;
 module.exports.modelVariableArray = modelVariableArray;
 module.exports.element = element;

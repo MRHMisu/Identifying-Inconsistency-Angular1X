@@ -1,10 +1,3 @@
-/**
- * Created by Misu Be Imp on 11/3/2016.
- */
-
-
-
-
 module.exports.getParsedController = getParsedController;
 var esprima = require('esprima');
 var estraverse = require('estraverse');

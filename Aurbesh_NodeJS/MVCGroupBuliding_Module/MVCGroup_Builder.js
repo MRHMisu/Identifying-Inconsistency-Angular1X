@@ -1,6 +1,3 @@
-/**
- * Created by Misu Be Imp on 11/4/2016.
- */
 var fileContentReader = require('../ComponentSorting_Module/FileContentReader.js');
 var routeParser = require('../RouteParser_Module/RouteParser.js');
 var MVCGroup_Entity = require('./MVCGroup_Entity.js');
@@ -8,13 +5,14 @@ var ControllerParser = require('../ControllerParser_Module/ControllerParser_Node
 var ViewParser = require('../ViewParser_Module/ViewParser_NodeJS');
 
 
-var applicationDirectorypath = "D:\\My Research On Performance Testing\\Angular js App DataSet\\01_Refactor app in visual studio code\\Kodigon (Structure OK)";
+var applicationDirectorypath ="D:\\My Research Work\\Angular js App DataSet\\1_Refactor App\\Cafe"
+    //"D:\\My Research Work\\Angular js App DataSet\\01_Refactor app in visual studio code\\Kodigon (Structure OK)";
 var requiredFiles = fileContentReader.getRequiredFiles(applicationDirectorypath);
 var parsedRoutes = routeParser.getParsedRoute(requiredFiles.configFile[0].content);
 
 var primaryMVCGroups = getPrimaryMVCGroup(parsedRoutes, requiredFiles);
 var MVCGroups = buildMVCGroup(primaryMVCGroups);
-
+var m=7;
 function buildMVCGroup(primaryMVCGroups) {
 
     var MVCGroup = [];

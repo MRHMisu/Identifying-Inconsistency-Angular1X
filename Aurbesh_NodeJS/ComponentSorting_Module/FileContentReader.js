@@ -1,10 +1,4 @@
-/**
- * Created by Misu Be Imp on 11/4/2016.
- */
-
 module.exports.getRequiredFiles = getRequiredFiles;
-
-
 var filesystem = require('fs');
 var File_Entity = require('./File_Entity.js');
 
@@ -52,6 +46,3 @@ function readFiles(fileList) {
     }
     return fileWithContent;
 }
-
-
-

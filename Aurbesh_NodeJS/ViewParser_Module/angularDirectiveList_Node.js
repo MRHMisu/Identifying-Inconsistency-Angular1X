@@ -1,10 +1,3 @@
-/**
- * Created by Misu Be Imp on 6/9/2016.
- */
-//first find all the model variable
-//model variables in elements that take them as attribute values
-
-
 module.exports.getAngularAttributeDirectivesForModelValue = getAngularAttributeDirectivesForModelValue;
 module.exports.getAngularAttributeDirectiveForControllerFunctionsList = getAngularAttributeDirectiveForControllerFunctionsList;
 
