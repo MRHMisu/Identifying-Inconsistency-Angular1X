@@ -34,8 +34,10 @@ function getJavaScriptCode(code) {
         }
     });
     getControllerFunctionListFromModelAssingmentVariable();
-    getUpdatedModelVariables()
+    getUpdatedModelVariables();
+
 }
+
 
 
 function getControllerFunctionListFromModelAssingmentVariable() {

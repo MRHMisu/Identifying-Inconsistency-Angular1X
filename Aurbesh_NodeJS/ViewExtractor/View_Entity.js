@@ -51,6 +51,7 @@ function ControllerFunctionInView(directive, dataType, controllerFunctionName, l
     this.controllerFunctionName = controllerFunctionName;
     this.lineNumber = lineNumber;
 }
+
 function NG_ReapteElementsInView(arrayName, alice, value) {
     this.arrayName = arrayName;
     this.alice = alice;

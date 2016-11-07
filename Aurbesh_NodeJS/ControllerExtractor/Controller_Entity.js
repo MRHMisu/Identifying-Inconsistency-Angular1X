@@ -26,6 +26,7 @@ function controllerFunction(controllerFunctionName, returnType, startLineNumber,
     this.startLineNumber = startLineNumber;
     this.endLineNumber = endLineNumber;
 }
+
 function property(name, value, type) {
     this.name = name;
     this.value = value;

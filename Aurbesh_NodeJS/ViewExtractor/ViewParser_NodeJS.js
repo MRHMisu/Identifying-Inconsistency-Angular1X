@@ -17,7 +17,8 @@ function getParsedView(htmlRawCode) {
     angularAttributeDirectivesForModelValue = angularDirectives.getAngularAttributeDirectivesForModelValue();
     getHTMLCode(htmlRawCode);
     getUpdatedModelVariables();
-    modelVariableList=getUpdatedModelVariables();
+    modelVariableList = getUpdatedModelVariables();
+
     return {
         'modelVariableList': modelVariableList,
         'controllerFunctionList': controllerFunctionList,
@@ -27,6 +28,9 @@ function getParsedView(htmlRawCode) {
 
 
 //modelVariableList
+
+
+
 
 function getUpdatedModelVariables() {
     var updatedList = [];
@@ -175,6 +179,7 @@ function getControllerFunctions(parsedDOM, htmlRawCode) {
         if (elements != null && elements.length > 0) {
             for (var j = 0; j < elements.length; j++) {
                 var directiveAttributeCFValue = elements[j].getAttribute(directiveCF.signature);
+                directiveAttributeCFValue=directiveAttributeCFValue.replace('(','').replace(')','').trim();
                 var lineNumberSignature = directiveCF.signature + '=' + '"' + directiveAttributeCFValue + '"';
                 var lineNumber = getLineNumberOfTheSignature(lineNumberSignature, htmlRawCode);
                 for (var k = 0; k < lineNumber.length; k++) {

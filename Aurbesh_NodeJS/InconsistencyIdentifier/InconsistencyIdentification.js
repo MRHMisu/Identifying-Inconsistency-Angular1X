@@ -1,31 +1,30 @@
-var Inconsistency_Entity = require('./Inconsistency_Entity.js');
 
+var Inconsistency_Entity = require('./Inconsistency_Entity.js');
+var MVCGroupBuilder=require('../MVCGroupBulider/MVCGroup_Builder');
 var unusedModelVariable = [];
 var unusedControllerFunction = [];
-
 var inconsistencyList = [];
 
-var modelVariableInController = [{
-    value: 'ng-model',
-    dataType: 'boolean',
-    lineNumber: 18,
-    modelVariableName: 'employee.firstName'
-}];
+getInconsistency();
+function getInconsistency()
+{
+    var MVCGroupList=MVCGroupBuilder.getMVCGroupList();
+    for(var i=0; i<MVCGroupList.length;i++ )
+    {
+        var group=MVCGroupList[i];
+        var viewName=group.viewName;
+        var controllerName=group.controllerName;
+        var modelVariableInController=group.extractedController.modelVariableList;
+        var modelVariableInView=group.extractedView.modelVariableList;
 
-var modelVariableInView = [{
+        getInconsistencyInModelVariableList(controllerName,modelVariableInController,viewName,modelVariableInView);
 
-    directive: 'ng-model',
-    dataType: 'boolean',
-    lineNumber: 18,
-    modelVariableName: 'employee.firstNameee'
 
-}];
+    }
 
-var viewName="misu.view.js";
-var controllerName="misu.controller.js";
+}
 
-getInconsistencyInModelVariableList(controllerName,modelVariableInController,CFInView,modelVariableInView);
-getInconsistencyInControllerFunctionList(controllerName,CFInController,viewName, CFInView);
+
 
 function getInconsistencyInModelVariableList(controllerName, modelVariableInController, viewName, modelVariableInView) {
     for (var i = 0; i < modelVariableInController.length; i++) {
@@ -130,3 +129,18 @@ function getInconsistencyInControllerFunctionList(controllerName, CFInController
 }
 
 
+var modelVariableInController = [{
+    value: 'ng-model',
+    dataType: 'boolean',
+    lineNumber: 18,
+    modelVariableName: 'employee.firstName'
+}];
+
+var modelVariableInView = [{
+
+    directive: 'ng-model',
+    dataType: 'boolean',
+    lineNumber: 18,
+    modelVariableName: 'employee.firstNameee'
+
+}];
