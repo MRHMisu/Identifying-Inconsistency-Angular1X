@@ -4,8 +4,8 @@
 
 
 var fileSystem = require('fs');
-var viewParser = require('./ViewParser_Module/ViewParser_NodeJS');
-var controllerParser = require('./ControllerParser_Module/ControllerParser_NodeJS');
+var viewParser = require('./ViewExtractor/ViewParser_NodeJS');
+var controllerParser = require('./ControllerExtractor/ControllerParser_NodeJS');
 
 var viewData = fileSystem.readFileSync('demoview.txt').toString();
 var controllerData = fileSystem.readFileSync('democontroller.txt').toString();

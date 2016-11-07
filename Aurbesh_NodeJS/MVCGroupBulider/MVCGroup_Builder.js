@@ -1,8 +1,8 @@
-var fileContentReader = require('../ComponentSorting_Module/FileContentReader.js');
-var routeParser = require('../RouteParser_Module/RouteParser.js');
+var fileContentReader = require('./FileContentReader.js');
+var routeParser = require('./RouteParser.js');
 var MVCGroup_Entity = require('./MVCGroup_Entity.js');
-var ControllerParser = require('../ControllerParser_Module/ControllerParser_NodeJS');
-var ViewParser = require('../ViewParser_Module/ViewParser_NodeJS');
+var ControllerParser = require('./ControllerParser_NodeJS');
+var ViewParser = require('./ViewParser_NodeJS');
 
 
 var applicationDirectorypath ="D:\\My Research Work\\Angular js App DataSet\\1_Refactor App\\Cafe"
