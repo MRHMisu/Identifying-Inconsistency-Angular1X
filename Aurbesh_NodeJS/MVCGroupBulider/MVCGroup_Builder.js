@@ -12,7 +12,8 @@ getMVCGroupList();
 var l=0;
 function getMVCGroupList() {
 
-    var applicationDirectorypath = "D:\\My Research Work\\Angular js App DataSet\\1_Refactor App\\Cafe";
+    var applicationDirectorypath = "D:\\Implementation Work\\AngularJSMVCAppDataSet\\01_Refactor app in visual studio code\\Cafe";
+    // "D:\\My Research Work\\Angular js App DataSet\\1_Refactor App\\Cafe";
 
     var requiredFiles = fileContentReader.getRequiredFiles(applicationDirectorypath);
     var parsedRoutes = routeParser.getParsedRoute(requiredFiles.configFile[0].content);

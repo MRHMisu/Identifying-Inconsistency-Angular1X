@@ -10,14 +10,14 @@ var controllerFunctionList = [];
 var ngRepeatElements = [];
 var angularAttributeDirectiveForControllerFunctions;
 var angularAttributeDirectivesForModelValue;
-
+var updatedList = [];
 function getParsedView(htmlRawCode) {
 
     angularAttributeDirectiveForControllerFunctions = angularDirectives.getAngularAttributeDirectiveForControllerFunctionsList();
     angularAttributeDirectivesForModelValue = angularDirectives.getAngularAttributeDirectivesForModelValue();
     getHTMLCode(htmlRawCode);
     getUpdatedModelVariables();
-    modelVariableList = getUpdatedModelVariables();
+    //modelVariableList = getUpdatedModelVariables();
 
     return {
         'modelVariableList': modelVariableList,
@@ -33,15 +33,37 @@ function getParsedView(htmlRawCode) {
 
 
 function getUpdatedModelVariables() {
-    var updatedList = [];
-    for (var i = 0; i < extractedModelVariableList.length; i++) {
-        var modelVariable = extractedModelVariableList[i];
-        if (!(viewEntity.isExsistInArray(updatedList, modelVariable))) {
-            updatedList.push(modelVariable);
+    var copiedMVList=copyArray(extractedModelVariableList);
+    for (var i = 0; i < copiedMVList.length; i++) {
+        if (!(isContain(copiedMVList[i]))) {
+            updatedList.push(copiedMVList[i]);
         }
-
     }
-    return updatedList;
+}
+function copyArray(fromArray)
+{
+    var array=[];
+    for(var i=0; i<fromArray.length;i++ )
+    {
+        array.push(fromArray[i]);
+    }
+    return array;
+}
+
+function isContain(object) {
+    for (var i = 0; i < updatedList.length; i++) {
+        if (compareToModelVariableInView(updatedList[i], object))true;
+    }
+    return false;
+}
+
+
+function compareToModelVariableInView(objOne, objTwo) {
+    if (!(objOne.directive === objTwo.directive))return false;
+    if (!(objOne.dataType === objTwo.dataType))return false;
+    if (!(objOne.lineNumber === objTwo.lineNumber))return false;
+    if (!(objOne.modelVariableName === objTwo.modelVariableName))return false;
+    return true;
 }
 
 function getHTMLCode(htmlRawCode) {
