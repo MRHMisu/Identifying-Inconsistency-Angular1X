@@ -5,59 +5,50 @@ var viewEntity = require('./View_Entity.js');
 var angularDirectives = require('./angularDirectiveList_Node.js');
 
 var extractedModelVariableList = [];
-var modelVariableList = [];
-var controllerFunctionList = [];
+var extractedControllerFunctionList = [];
 var ngRepeatElements = [];
 var angularAttributeDirectiveForControllerFunctions;
 var angularAttributeDirectivesForModelValue;
-var updatedList = [];
-function getParsedView(htmlRawCode) {
+var uniqueModelVariableList = [];
+var uniqueControllerFunction = [];
 
+
+function getParsedView(htmlRawCode) {
     angularAttributeDirectiveForControllerFunctions = angularDirectives.getAngularAttributeDirectiveForControllerFunctionsList();
     angularAttributeDirectivesForModelValue = angularDirectives.getAngularAttributeDirectivesForModelValue();
     getHTMLCode(htmlRawCode);
-    getUpdatedModelVariables();
-    //modelVariableList = getUpdatedModelVariables();
+    getUniqueModelVariableList();
+    getUniqueControllerFunctionList();
 
     return {
-        'modelVariableList': modelVariableList,
-        'controllerFunctionList': controllerFunctionList,
+        'modelVariableList': uniqueModelVariableList,
+        'controllerFunctionList': uniqueControllerFunction,
         'ngRepeatElements': ngRepeatElements
     }
 }
 
-
-//modelVariableList
-
-
-
-
-function getUpdatedModelVariables() {
-    var copiedMVList=copyArray(extractedModelVariableList);
+//MV
+function getUniqueModelVariableList() {
+    var copiedMVList = copyArray(extractedModelVariableList);
     for (var i = 0; i < copiedMVList.length; i++) {
-        if (!(isContain(copiedMVList[i]))) {
-            updatedList.push(copiedMVList[i]);
+        if (!(isContainMV(copiedMVList[i]))) {
+            uniqueModelVariableList.push(copiedMVList[i]);
         }
     }
 }
-function copyArray(fromArray)
-{
-    var array=[];
-    for(var i=0; i<fromArray.length;i++ )
-    {
+function copyArray(fromArray) {
+    var array = [];
+    for (var i = 0; i < fromArray.length; i++) {
         array.push(fromArray[i]);
     }
     return array;
 }
-
-function isContain(object) {
-    for (var i = 0; i < updatedList.length; i++) {
-        if (compareToModelVariableInView(updatedList[i], object))true;
+function isContainMV(object) {
+    for (var i = 0; i < uniqueModelVariableList.length; i++) {
+        if (compareToModelVariableInView(uniqueModelVariableList[i], object))return true;
     }
     return false;
 }
-
-
 function compareToModelVariableInView(objOne, objTwo) {
     if (!(objOne.directive === objTwo.directive))return false;
     if (!(objOne.dataType === objTwo.dataType))return false;
@@ -65,7 +56,29 @@ function compareToModelVariableInView(objOne, objTwo) {
     if (!(objOne.modelVariableName === objTwo.modelVariableName))return false;
     return true;
 }
-
+//CF
+function getUniqueControllerFunctionList() {
+    var copiedMVList = copyArray(extractedControllerFunctionList);
+    for (var i = 0; i < copiedMVList.length; i++) {
+        if (!(isContainCF(copiedMVList[i]))) {
+            uniqueControllerFunction.push(copiedMVList[i]);
+        }
+    }
+}
+function isContainCF(object) {
+    for (var i = 0; i < uniqueControllerFunction.length; i++) {
+        if (compareToControllerFunctionInView(uniqueControllerFunction[i], object))return true;
+    }
+    return false;
+}
+function compareToControllerFunctionInView(objOne, objTwo) {
+    if (!(objOne.directive === objTwo.directive))return false;
+    if (!(objOne.dataType === objTwo.dataType))return false;
+    if (!(objOne.lineNumber === objTwo.lineNumber))return false;
+    if (!(objOne.controllerFunctionName === objTwo.controllerFunctionName))return false;
+    return true;
+}
+//Parsing
 function getHTMLCode(htmlRawCode) {
 
     var htmlRawCode = htmlRawCode;//document.getElementById('textEditor').value;
@@ -74,11 +87,8 @@ function getHTMLCode(htmlRawCode) {
     getControllerFunctions(parsedDOM, htmlRawCode);
     getNGRepeatElements(parsedDOM, htmlRawCode);
     getAngularExpressionDirective(htmlRawCode, parsedDOM);
-    //viewModel_VariableList=removeModelObject(viewModel_VariableList);
 
 }
-
-
 function getLineNumberOfTheSignature(signature, htmlRawCode) {
     var lineNumber = [];
     var splitedHtmlRawCode = htmlRawCode.split("\n");
@@ -90,7 +100,6 @@ function getLineNumberOfTheSignature(signature, htmlRawCode) {
     }
     return lineNumber;
 }
-
 function getAngularExpressionDirective(htmlRawCode, parsedDOM) {
     //get all angular Expression {{*}}
     var allAngularExpression = traversDomNodes(parsedDOM, new Array(), parsedDOM);
@@ -108,32 +117,41 @@ function getAngularExpressionDirective(htmlRawCode, parsedDOM) {
             var array = attributeValue.split("=");
             var attribute = array[0];
             var value = array[1];
-            for (var j = 0; j < htmlRawCode.length; j++) {
+            for (var j = 0; j < angularAttributeDirectivesForModelValue.length; j++) {
                 var regModelDirective = angularAttributeDirectivesForModelValue[j].signature;
                 var matchModelDirective = eval('/' + regModelDirective + '/g');
                 if (matchModelDirective.exec(attribute)) {
-                    var modelDirective = htmlRawCode[j];
-                    var attributeModelValue = value;
-                    extractedModelVariableList.push(new viewEntity.ModelVariableInView(modelDirective.signature, modelDirective.acceptedDatatype, attributeModelValue));
 
+                    var directive = angularAttributeDirectivesForModelValue[j].signature;
+                    var dataType = angularAttributeDirectivesForModelValue[j].acceptedDatatype;
+                    var modelVariableName = value;
+                    var lineNumberSignature = directive.signature + '=' + '"' + "{{" + modelVariableName + "}}" + '"';
+                    var lineNumber = getLineNumberOfTheSignature(lineNumberSignature, htmlRawCode);
+                    for (var k = 0; k < lineNumber.length; k++) {
+                        extractedModelVariableList.push(new viewEntity.ModelVariableInView(directive, dataType, lineNumber[k], modelVariableName));
+                    }
                 }
             }
-            for (var k = 0; k < angularAttributeDirectiveForControllerFunctions.length; k++) {
-                var regControllerDirective = angularAttributeDirectiveForControllerFunctions[k].signature;
+            for (var l = 0; l < angularAttributeDirectiveForControllerFunctions.length; l++) {
+                var regControllerDirective = angularAttributeDirectiveForControllerFunctions[l].signature;
                 var matchControllerFunctionDirective = eval('/' + regControllerDirective + '/g');
                 if (matchControllerFunctionDirective.exec(attribute)) {
-                    var CFDirective = angularAttributeDirectiveForControllerFunctions[k];
-                    var attributeCFValue = value;
-                    extractedModelVariableList.push(new viewEntity.ControllerFunctionInView(CFDirective.signature, CFDirective.acceptedDatatype, attributeCFValue));
+                    var directive = angularAttributeDirectiveForControllerFunctions[j].signature;
+                    var dataType = angularAttributeDirectiveForControllerFunctions[j].acceptedDatatype;
+                    var controllerFunctionName = value.replace('(', '').replace(')','').trim();
+                    var lineNumberSignature = directive.signature + '=' + '"' + "{{" + controllerFunctionName + "()" + "}}" + '"';
+                    var lineNumber = getLineNumberOfTheSignature(lineNumberSignature, htmlRawCode);
+                    for (var m = 0; m < lineNumber.length; m++) {
+                        extractedControllerFunctionList.push(new viewEntity.ControllerFunctionInView(directive, dataType, lineNumber[m], controllerFunctionName));
+                    }
+
                 }
             }
         }
 
-
     }
 
 }
-
 function getElementsByAttribute(parsedDOM, attribute) {
     var nodeList = parsedDOM.getElementsByTagName('*');
     var nodeArray = [];
@@ -146,8 +164,6 @@ function getElementsByAttribute(parsedDOM, attribute) {
 
     return nodeArray;
 }
-
-
 function getAttributeValueRegularExpression(value) {
     var firstExpression = '/' + 'ng-' + '\\w*="{{(';
     var lastExpression = ')}}"/g'
@@ -155,7 +171,6 @@ function getAttributeValueRegularExpression(value) {
     var expression = eval(firstExpression + middleValue + lastExpression);
     return expression;
 }
-
 function getNGRepeatElements(parsedDOM, htmlRawCode) {
     var allNgRepeatElement = getElementsByAttribute(parsedDOM, 'ng-repeat');
     if (allNgRepeatElement != null && allNgRepeatElement.length > 0) {
@@ -172,9 +187,7 @@ function getNGRepeatElements(parsedDOM, htmlRawCode) {
             }
         }
     }
-
 }
-
 function getModelVariables(parsedDOM, htmlRawCode) {
     for (var i = 0; i < angularAttributeDirectivesForModelValue.length; i++) {
         var directive = angularAttributeDirectivesForModelValue[i];
@@ -182,18 +195,16 @@ function getModelVariables(parsedDOM, htmlRawCode) {
         if (elements != null && elements.length > 0) {
             for (var j = 0; j < elements.length; j++) {
                 var directiveAttributeModelValue = elements[j].getAttribute(directive.signature);
+                directiveAttributeModelValue = directiveAttributeModelValue.replace('!', '').trim();
                 var lineNumberSignature = directive.signature + '=' + '"' + directiveAttributeModelValue + '"';
                 var lineNumber = getLineNumberOfTheSignature(lineNumberSignature, htmlRawCode);
                 for (var k = 0; k < lineNumber.length; k++) {
                     extractedModelVariableList.push(new viewEntity.ModelVariableInView(directive.signature, directive.acceptedDatatype, lineNumber[k], directiveAttributeModelValue.replace(/{{/g, '').replace(/}}/g, '').trim()));
-
                 }
-
             }
         }
     }
 }
-
 function getControllerFunctions(parsedDOM, htmlRawCode) {
     for (var i = 0; i < angularAttributeDirectiveForControllerFunctions.length; i++) {
         var directiveCF = angularAttributeDirectiveForControllerFunctions[i];
@@ -201,11 +212,11 @@ function getControllerFunctions(parsedDOM, htmlRawCode) {
         if (elements != null && elements.length > 0) {
             for (var j = 0; j < elements.length; j++) {
                 var directiveAttributeCFValue = elements[j].getAttribute(directiveCF.signature);
-                directiveAttributeCFValue=directiveAttributeCFValue.replace('(','').replace(')','').trim();
+                directiveAttributeCFValue = directiveAttributeCFValue.replace('!', '').replace('(', '').replace(')', '').trim();
                 var lineNumberSignature = directiveCF.signature + '=' + '"' + directiveAttributeCFValue + '"';
                 var lineNumber = getLineNumberOfTheSignature(lineNumberSignature, htmlRawCode);
                 for (var k = 0; k < lineNumber.length; k++) {
-                    controllerFunctionList.push(new viewEntity.ControllerFunctionInView(directiveCF.signature, directiveCF.acceptedDatatype, directiveAttributeCFValue, lineNumber[k]));
+                    extractedControllerFunctionList.push(new viewEntity.ControllerFunctionInView(directiveCF.signature, directiveCF.acceptedDatatype, directiveAttributeCFValue, lineNumber[k]));
                 }
 
             }
@@ -213,30 +224,28 @@ function getControllerFunctions(parsedDOM, htmlRawCode) {
     }
 
 }
+function traversDomNodes(node, ngRepeatVariableList, theDom) {
 
-function traversDomNodes(node, modelVariableList, theDom) {
-
-    if (node.nodeType == 9) { //DOCUMENT node
+    if (node.nodeType == 9) { //nodeType refers  document node
         for (var i = 0; i < node.childNodes.length; i++) {
-            traversDomNodes(node.childNodes[i], modelVariableList, theDom);
+            traversDomNodes(node.childNodes[i], ngRepeatVariableList, theDom);
         }
     }
-    else if (node.nodeType == 3) { //TEXT node
-        var angularExpression = /{{(.*)+}}/g;//angular expression pattern {{xyz}}
+    else if (node.nodeType == 3) { //nodeType refers text node
+        var angularExpression = /{{(.*)+}}/g;//angular expression pattern {{abc}}
         var textNodeData = node.data;
         var tempMatchList;
         while ((tempMatchList = angularExpression.exec(textNodeData)) !== null) {
             var replaced = tempMatchList[0].replace(/{{/g, '').replace(/}}/g, '').trim();
-            modelVariableList.push(replaced);
-
+            ngRepeatVariableList.push(replaced);
         }
     }
-    else if (node.nodeType == 1) { //ELEMENT node
+    else if (node.nodeType == 1) { //nodeType refers element node
         for (var i = 0; i < node.childNodes.length; i++) {
-            traversDomNodes(node.childNodes[i], modelVariableList, theDom);
+            traversDomNodes(node.childNodes[i], ngRepeatVariableList, theDom);
         }
     }
-    return modelVariableList;
+    return ngRepeatVariableList;
 }
 
 

@@ -56,9 +56,9 @@ function getController(controllerData) {
  for (var i = 0; i < list.modelvariables.length; i++) {
  console.log(list.modelvariables[i]);
  }
- console.log(list.controllerFunctionList.length);
- for (var i = 0; i < list.controllerFunctionList.length; i++) {
- console.log(list.controllerFunctionList[i]);
+ console.log(list.extractedControllerFunctionList.length);
+ for (var i = 0; i < list.extractedControllerFunctionList.length; i++) {
+ console.log(list.extractedControllerFunctionList[i]);
  }
  }
  }*/
