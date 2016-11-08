@@ -10,9 +10,13 @@ var modelVariableList = [];
 var modelVariableArrayList = [];
 var functionList = [];
 var controllerFunctionList = [];
+var uniqueModelVariableList = [];
+var uniqueControllerFunction = [];
 
 function getParsedController(code) {
     getJavaScriptCode(code);
+    getUniqueModelVariableList();
+    getUniqueControllerFunctionList();
     return {
         'viewModelIdentifier': viewModelIdentifier,
         'modelVariableList': modelVariableList,
@@ -20,6 +24,59 @@ function getParsedController(code) {
         'modelVariableArrayList': modelVariableArrayList
     }
 }
+
+//MV
+function getUniqueModelVariableList() {
+    var copiedMVList = copyArray(modelVariableList);
+    for (var i = 0; i < copiedMVList.length; i++) {
+        if (!(isContainMV(copiedMVList[i]))) {
+            uniqueModelVariableList.push(copiedMVList[i]);
+        }
+    }
+}
+function copyArray(fromArray) {
+    var array = [];
+    for (var i = 0; i < fromArray.length; i++) {
+        array.push(fromArray[i]);
+    }
+    return array;
+}
+function isContainMV(object) {
+    for (var i = 0; i < uniqueModelVariableList.length; i++) {
+        if (compareToModelVariableInController(uniqueModelVariableList[i], object))return true;
+    }
+    return false;
+}
+function compareToModelVariableInController(objOne, objTwo) {
+    if (!(objOne.value === objTwo.value))return false;
+    if (!(objOne.dataType === objTwo.dataType))return false;
+    if (!(objOne.lineNumber === objTwo.lineNumber))return false;
+    if (!(objOne.modelVariableName === objTwo.modelVariableName))return false;
+    return true;
+}
+//CF
+function getUniqueControllerFunctionList() {
+    var copiedMVList = copyArray(controllerFunctionList);
+    for (var i = 0; i < copiedMVList.length; i++) {
+        if (!(isContainCF(copiedMVList[i]))) {
+            uniqueControllerFunction.push(copiedMVList[i]);
+        }
+    }
+}
+function isContainCF(object) {
+    for (var i = 0; i < uniqueControllerFunction.length; i++) {
+        if (compareToControllerFunctionInController(uniqueControllerFunction[i], object))return true;
+    }
+    return false;
+}
+function compareToControllerFunctionInController(objOne, objTwo) {
+    if (!(objOne.returnType === objTwo.returnType))return false;
+    if (!(objOne.startLineNumber === objTwo.startLineNumber))return false;
+    if (!(objOne.endLineNumber === objTwo.endLineNumber))return false;
+    if (!(objOne.controllerFunctionName === objTwo.controllerFunctionName))return false;
+    return true;
+}
+
 
 function getJavaScriptCode(code) {
     var jsRawCode = code// document.getElementById('textEditor').value;
@@ -37,7 +94,6 @@ function getJavaScriptCode(code) {
     getUpdatedModelVariables();
 
 }
-
 
 
 function getControllerFunctionListFromModelAssingmentVariable() {
@@ -342,6 +398,7 @@ function getInternalFunctionAssignedVariables(node) {
                 }
                 if (node.expression.right.type == 'CallExpression') {
                     //ToDo
+                    return;
                 }
                 if (node.expression.right.type == 'ReturnStatement') {
                     return;

@@ -1,5 +1,4 @@
-module.exports.getMVCGroupList=getMVCGroupList;
-
+module.exports.getMVCGroupList = getMVCGroupList;
 var fileContentReader = require('../ComponentCollector/FileContentReader.js');
 var routeParser = require('../RouteExtractor/RouteParser.js');
 var MVCGroup_Entity = require('./MVCGroup_Entity.js');
@@ -7,13 +6,12 @@ var ControllerParser = require('../ControllerExtractor/ControllerParser_NodeJS')
 var ViewParser = require('../ViewExtractor/ViewParser_NodeJS');
 
 
-//"D:\\My Research Work\\Angular js App DataSet\\01_Refactor app in visual studio code\\Kodigon (Structure OK)";
 getMVCGroupList();
-var l=0;
+var l = 0;
 function getMVCGroupList() {
 
     var applicationDirectorypath = "D:\\Implementation Work\\AngularJSMVCAppDataSet\\01_Refactor app in visual studio code\\Cafe";
-    // "D:\\My Research Work\\Angular js App DataSet\\1_Refactor App\\Cafe";
+
 
     var requiredFiles = fileContentReader.getRequiredFiles(applicationDirectorypath);
     var parsedRoutes = routeParser.getParsedRoute(requiredFiles.configFile[0].content);
@@ -21,7 +19,6 @@ function getMVCGroupList() {
     var MVCGroups = buildMVCGroup(primaryMVCGroups);
     return MVCGroups;
 }
-
 
 
 function buildMVCGroup(primaryMVCGroups) {
