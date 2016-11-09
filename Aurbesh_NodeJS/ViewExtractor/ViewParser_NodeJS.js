@@ -3,12 +3,14 @@ module.exports.getParsedView = getParsedView;
 var DOMParser = require('xmldom').DOMParser;
 var viewEntity = require('./View_Entity.js');
 var angularDirectives = require('./angularDirectiveList_Node.js');
+var Colone = require('clone');
+
+var angularAttributeDirectiveForControllerFunctions;
+var angularAttributeDirectivesForModelValue;
 
 var extractedModelVariableList = [];
 var extractedControllerFunctionList = [];
 var ngRepeatElements = [];
-var angularAttributeDirectiveForControllerFunctions;
-var angularAttributeDirectivesForModelValue;
 var uniqueModelVariableList = [];
 var uniqueControllerFunction = [];
 
@@ -20,13 +22,27 @@ function getParsedView(htmlRawCode) {
     getUniqueModelVariableList();
     getUniqueControllerFunctionList();
 
+    var extractedModelVariableList = [];
+    var extractedControllerFunctionList = [];
+    var copy_ngRepeatElements = Colone(ngRepeatElements);
+    var copy_uniqueModelVariableList = Colone(uniqueModelVariableList);
+    var copy_uniqueControllerFunction = Colone(uniqueControllerFunction);
+    reInitilizeAllGlobalVariable();
     return {
-        'modelVariableList': uniqueModelVariableList,
-        'controllerFunctionList': uniqueControllerFunction,
-        'ngRepeatElements': ngRepeatElements
+        'modelVariableList': copy_uniqueModelVariableList,
+        'controllerFunctionList': copy_uniqueControllerFunction,
+        'ngRepeatElements': copy_ngRepeatElements
     }
 }
 
+function reInitilizeAllGlobalVariable() {
+    extractedModelVariableList = [];
+    extractedControllerFunctionList = [];
+    ngRepeatElements = []
+    uniqueModelVariableList = []
+    uniqueControllerFunction = [];
+
+}
 //MV
 function getUniqueModelVariableList() {
     var copiedMVList = copyArray(extractedModelVariableList);
@@ -138,7 +154,7 @@ function getAngularExpressionDirective(htmlRawCode, parsedDOM) {
                 if (matchControllerFunctionDirective.exec(attribute)) {
                     var directive = angularAttributeDirectiveForControllerFunctions[j].signature;
                     var dataType = angularAttributeDirectiveForControllerFunctions[j].acceptedDatatype;
-                    var controllerFunctionName = value.replace('(', '').replace(')','').trim();
+                    var controllerFunctionName = value.replace('(', '').replace(')', '').trim();
                     var lineNumberSignature = directive.signature + '=' + '"' + "{{" + controllerFunctionName + "()" + "}}" + '"';
                     var lineNumber = getLineNumberOfTheSignature(lineNumberSignature, htmlRawCode);
                     for (var m = 0; m < lineNumber.length; m++) {

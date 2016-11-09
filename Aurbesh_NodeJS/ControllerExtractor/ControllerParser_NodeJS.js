@@ -2,7 +2,7 @@ module.exports.getParsedController = getParsedController;
 var esprima = require('esprima');
 var estraverse = require('estraverse');
 var controllerEntity = require('./Controller_Entity.js');
-
+var Colone = require('clone');
 
 var viewModelIdentifier = {};
 var viewModel_VariableList = [];
@@ -17,13 +17,30 @@ function getParsedController(code) {
     getJavaScriptCode(code);
     getUniqueModelVariableList();
     getUniqueControllerFunctionList();
+    var copy_viewModelIdentifier = Colone(viewModelIdentifier);
+    var copy_uniqueModelVariableList = Colone(uniqueModelVariableList);
+    var copy_uniqueControllerFunction = Colone(uniqueControllerFunction);
+    var copy_modelVariableArrayList = Colone(modelVariableArrayList);
+    reinitializeAllGlobalObject();
     return {
-        'viewModelIdentifier': viewModelIdentifier,
-        'modelVariableList': modelVariableList,
-        'controllerFunctionList': controllerFunctionList,
-        'modelVariableArrayList': modelVariableArrayList
+        'viewModelIdentifier': copy_viewModelIdentifier,
+        'modelVariableList': copy_uniqueModelVariableList,
+        'controllerFunctionList': copy_uniqueControllerFunction,
+        'modelVariableArrayList': copy_modelVariableArrayList
     }
 }
+
+function reinitializeAllGlobalObject() {
+    viewModel_VariableList = [];
+    modelVariableList = [];
+    functionList = [];
+    controllerFunctionList = [];
+    viewModelIdentifier = {};
+    uniqueModelVariableList = [];
+    uniqueControllerFunction = [];
+    modelVariableArrayList = [];
+}
+
 
 //MV
 function getUniqueModelVariableList() {
@@ -34,6 +51,7 @@ function getUniqueModelVariableList() {
         }
     }
 }
+
 function copyArray(fromArray) {
     var array = [];
     for (var i = 0; i < fromArray.length; i++) {
@@ -41,12 +59,14 @@ function copyArray(fromArray) {
     }
     return array;
 }
+
 function isContainMV(object) {
     for (var i = 0; i < uniqueModelVariableList.length; i++) {
         if (compareToModelVariableInController(uniqueModelVariableList[i], object))return true;
     }
     return false;
 }
+
 function compareToModelVariableInController(objOne, objTwo) {
     if (!(objOne.value === objTwo.value))return false;
     if (!(objOne.dataType === objTwo.dataType))return false;
@@ -54,6 +74,7 @@ function compareToModelVariableInController(objOne, objTwo) {
     if (!(objOne.modelVariableName === objTwo.modelVariableName))return false;
     return true;
 }
+
 //CF
 function getUniqueControllerFunctionList() {
     var copiedMVList = copyArray(controllerFunctionList);
@@ -63,12 +84,14 @@ function getUniqueControllerFunctionList() {
         }
     }
 }
+
 function isContainCF(object) {
     for (var i = 0; i < uniqueControllerFunction.length; i++) {
         if (compareToControllerFunctionInController(uniqueControllerFunction[i], object))return true;
     }
     return false;
 }
+
 function compareToControllerFunctionInController(objOne, objTwo) {
     if (!(objOne.returnType === objTwo.returnType))return false;
     if (!(objOne.startLineNumber === objTwo.startLineNumber))return false;
@@ -86,7 +109,6 @@ function getJavaScriptCode(code) {
             isViewModelThisExpression(node);
             getViewModelVariables(node);
             getAllFunctionalExpression(node);
-            //isCalleeExpression(node);
 
         }
     });
@@ -128,6 +150,7 @@ function isViewModelThisExpression(node) {
         }
     }
 }
+
 /*
  this.name='misu';
  vm.name='misu'//
@@ -283,6 +306,7 @@ function getAllFunctionalExpression(node) {
     }
 
 }
+
 /*all initialize and uninitialized variable
  * var m;(null initialization)
  * or var m,j,k;(multiple null initialization)
@@ -349,6 +373,7 @@ function getInternalFunctionDeclareVariables(node) {
         }
     }
 }
+
 /*
  *Name="Misu";
  * roll=0516;
@@ -407,9 +432,6 @@ function getInternalFunctionAssignedVariables(node) {
         }
     }
 }
-
-
-
 
 
 

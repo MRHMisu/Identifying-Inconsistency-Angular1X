@@ -10,9 +10,7 @@ getMVCGroupList();
 var l = 0;
 function getMVCGroupList() {
 
-    var applicationDirectorypath = "D:\\Implementation Work\\AngularJSMVCAppDataSet\\01_Refactor app in visual studio code\\Cafe";
-
-
+    var applicationDirectorypath = "D:\\My Research Work\\AngularJSMVCAppDataSet\\01_Refactor app in visual studio code\\Cafe";
     var requiredFiles = fileContentReader.getRequiredFiles(applicationDirectorypath);
     var parsedRoutes = routeParser.getParsedRoute(requiredFiles.configFile[0].content);
     var primaryMVCGroups = getPrimaryMVCGroup(parsedRoutes, requiredFiles);
@@ -22,14 +20,15 @@ function getMVCGroupList() {
 
 
 function buildMVCGroup(primaryMVCGroups) {
-
     var MVCGroup = [];
     for (var i = 0; i < primaryMVCGroups.length; i++) {
         var controllerName = primaryMVCGroups[i].controllerName;
-        var extractedController = ControllerParser.getParsedController(primaryMVCGroups[i].controllerCode);
-        var viewName = primaryMVCGroups[i].viewName;
-        var extractedView = ViewParser.getParsedView(primaryMVCGroups[i].viewCode);
-
+         var extractedController = ControllerParser.getParsedController(primaryMVCGroups[i].controllerCode);
+         var viewName = primaryMVCGroups[i].viewName;
+         var extractedView = ViewParser.getParsedView(primaryMVCGroups[i].viewCode);
+        /*MVCGroup.push(new MVCGroup_Entity.MVCGroup(primaryMVCGroups[i].controllerName, ControllerParser.getParsedController(primaryMVCGroups[i].controllerCode),
+            primaryMVCGroups[i].viewName, ViewParser.getParsedView(primaryMVCGroups[i].viewCode)
+        ));*/
         MVCGroup.push(new MVCGroup_Entity.MVCGroup(controllerName, extractedController, viewName, extractedView));
     }
     return MVCGroup;

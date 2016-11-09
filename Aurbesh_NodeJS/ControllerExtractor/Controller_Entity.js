@@ -3,6 +3,8 @@ module.exports.modelVariableArray = modelVariableArray;
 module.exports.element = element;
 module.exports.controllerFunction = controllerFunction;
 module.exports.property = property;
+module.exports.ParsedController=ParsedController;
+
 
 function modelVariable(modelVariableName, value, dataType, lineNumber) {
     this.modelVariableName = modelVariableName;
@@ -31,4 +33,13 @@ function property(name, value, type) {
     this.name = name;
     this.value = value;
     this.type = type;
+}
+
+function ParsedController(viewModelIdentifier, modelVariableList, controllerFunctionList, modelVariableArrayList) {
+
+    this.viewModelIdentifier = viewModelIdentifier;
+    this.modelVariableList = modelVariableList;
+    this.controllerFunctionList = controllerFunctionList;
+    this.modelVariableArrayList = modelVariableArrayList;
+
 }
