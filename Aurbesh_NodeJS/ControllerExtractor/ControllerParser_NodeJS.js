@@ -5,7 +5,7 @@ var controllerEntity = require('./Controller_Entity.js');
 var Colone = require('clone');
 
 var viewModelIdentifier = {};
-var viewModel_VariableList = [];
+var vm_VariableList = [];
 var modelVariableList = [];
 var modelVariableArrayList = [];
 var functionList = [];
@@ -31,7 +31,7 @@ function getParsedController(code) {
 }
 
 function reinitializeAllGlobalObject() {
-    viewModel_VariableList = [];
+    vm_VariableList = [];
     modelVariableList = [];
     functionList = [];
     controllerFunctionList = [];
@@ -122,8 +122,11 @@ function getControllerFunctionListFromModelAssingmentVariable() {
     for (var i = 0; i < functionList.length; i++) {
         var regx = functionList[i].controllerFunctionName;// '/' + functionList[i].name + '/g';
         var regxObj = new RegExp(regx);
-        for (var j = 0; j < viewModel_VariableList.length; j++) {
-            if (regxObj.test(viewModel_VariableList[j].value)) {
+        for (var j = 0; j < vm_VariableList.length; j++) {
+            if (regxObj.test(vm_VariableList[j].value)) {
+
+                functionList[i].controllerFunctionName = vm_VariableList[j].modelVariableName;
+                functionList[i].endLineNumber = vm_VariableList[j].lineNumber;
                 controllerFunctionList.push(functionList[i]);
             }
         }
@@ -131,13 +134,19 @@ function getControllerFunctionListFromModelAssingmentVariable() {
 }
 
 function getUpdatedModelVariables() {
-    for (var i = 0; i < controllerFunctionList.length; i++) {
-        for (var j = 0; j < viewModel_VariableList.length; j++) {
-            if (!(viewModel_VariableList[j].modelVariableName.indexOf(controllerFunctionList[i].controllerFunctionName) > -1)) {
-                modelVariableList.push(viewModel_VariableList[j]);
+    for (var i = 0; i < vm_VariableList.length; i++) {
+        var regx = vm_VariableList[i].modelVariableName;// '/' + functionList[i].name + '/g';
+        var regxObj = new RegExp(regx);
+        for (var j = 0; j < controllerFunctionList.length; j++) {
+            if (!(regxObj.test(controllerFunctionList[j].controllerFunctionName))) {
+                var prefix = vm_VariableList[j].modelVariableName.split('.')[0];
+                if (prefix === "vm" || prefix === viewModelIdentifier.name) {
+                    modelVariableList.push(vm_VariableList[j]);
+                }
             }
         }
     }
+
 }
 
 //var vm=this;
@@ -197,18 +206,17 @@ function getViewModelVariables(node) {
 
 function getAssignmentValueFromRightSide(viewModelIdentifier, node) {
 
-
     if (node.right.type == 'Identifier') {
         var variableValue = node.right.name;
         var lineNumber = node.right.loc.end.line;
         var variableDataType = typeof variableValue;
-        return viewModel_VariableList.push(new controllerEntity.modelVariable(viewModelIdentifier, variableValue, variableDataType, lineNumber));
+        return vm_VariableList.push(new controllerEntity.modelVariable(viewModelIdentifier, variableValue, variableDataType, lineNumber));
     }
     if (node.right.type == 'Literal') {
         var variableValue = node.right.value;
         var lineNumber = node.right.loc.end.line;
         var variableDataType = typeof variableValue;
-        return viewModel_VariableList.push(new controllerEntity.modelVariable(viewModelIdentifier, variableValue, variableDataType, lineNumber));
+        return vm_VariableList.push(new controllerEntity.modelVariable(viewModelIdentifier, variableValue, variableDataType, lineNumber));
     }
     if (node.right.type == 'ObjectExpression') {
         var objectProperties = new Array();
@@ -217,9 +225,9 @@ function getAssignmentValueFromRightSide(viewModelIdentifier, node) {
             var variableValue = node.right.properties[j].value.value;
             var variableDataType = typeof variableValue;
             var lineNumber = node.right.properties[j].loc.end.line;
-            viewModel_VariableList.push(new controllerEntity.modelVariable(variableName, variableValue, variableDataType, lineNumber));
+            vm_VariableList.push(new controllerEntity.modelVariable(variableName, variableValue, variableDataType, lineNumber));
         }
-        return;
+        return ;
     }
     if (node.right.type == 'ArrayExpression') {
 

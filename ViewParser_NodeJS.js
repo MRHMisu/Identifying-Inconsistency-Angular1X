@@ -71,7 +71,7 @@ function getHTMLCode(htmlRawCode) {
     getControllerFunctions(parsedDOM, htmlRawCode);
     getNGRepeatElements(parsedDOM, htmlRawCode);
     getAngularExpressionDirective(htmlRawCode, parsedDOM);
-    //viewModel_VariableList=removeModelObject(viewModel_VariableList);
+    //vm_VariableList=removeModelObject(vm_VariableList);
 
 }
 

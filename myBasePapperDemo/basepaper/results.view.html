@@ -1,0 +1,9 @@
+<h3 ng-if="vm.userData.display">{{vm.userData.intro}}</h3>
+<ul>
+    <li ng-repeat="movie in vm.userData">{{movie.name}} </li>
+</ul>
+<div id="movieCount">
+    <ng-pluralize count="vm.userData.count" when="vm.movieForms">
+    </ng-pluralize>
+</div>
+<button ng-click="vm.alertUserName()">Which User?</button>

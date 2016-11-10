@@ -5,7 +5,6 @@ var MVCGroup_Entity = require('./MVCGroup_Entity.js');
 var ControllerParser = require('../ControllerExtractor/ControllerParser_NodeJS');
 var ViewParser = require('../ViewExtractor/ViewParser_NodeJS');
 
-
 getMVCGroupList();
 var l = 0;
 function getMVCGroupList() {
