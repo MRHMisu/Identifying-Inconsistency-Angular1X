@@ -20,6 +20,7 @@ function getMVCGroupList() {
     return MVCGroups;
 }
 
+/*
 function getUpdatedPrimaryMVCGroupsWithDirectives(primaryMVCGroups, requiredFiles) {
     for (var i = 0; i < requiredFiles.directiveFiles.length; i++) {
         var file = requiredFiles.directiveFiles[i];
@@ -28,12 +29,18 @@ function getUpdatedPrimaryMVCGroupsWithDirectives(primaryMVCGroups, requiredFile
         for (var j = 0; j < primaryMVCGroups.length; j++) {
             var group = primaryMVCGroups[0];
             var htmlRawCode = group.viewCode;
-            var parsedDOM = new DOMParser().parseFromString(htmlRawCode, "text/html");
-            var dir = parsedDOM.getElementsByTagName(directiveTag.toUpperCase())[0];
+            if(htmlRawCode.test(directiveTag))
+            {
+
+            }
+
+            //var parsedDOM = new DOMParser().parseFromString(htmlRawCode, "text/html");
+            //var dir = parsedDOM.getElementsByTagName(directiveTag.toUpperCase())[0];*!/
 
         }
     }
 }
+*/
 
 function getDirectiveTag(directiveName) {
     var tag = directiveName.replace(/([A-Z])/g, ' $1').replace(/^./, function (str) {
