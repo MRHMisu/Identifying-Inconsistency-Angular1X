@@ -1,18 +1,17 @@
-module.exports.getParsedDirective=getParsedDirective;
+module.exports.getParsedDirective = getParsedDirective;
 
 var esprima = require('esprima');
 var estraverse = require('estraverse');
 var directive = {};
 
-function getParsedDirective(code)
-{
+function getParsedDirective(code) {
     extractDirective(code);
     return directive;
 }
 
 
 function extractDirective(code) {
-    var jsRawCode=code
+    var jsRawCode = code
     var ast = esprima.parse(jsRawCode, {loc: true, tokens: true});
     estraverse.traverse(ast, {
         enter: function (node, parent) {
@@ -32,8 +31,18 @@ function getDirectivePropertiesFromConstructorFunction(node) {
                         if (declarations[i].init.type == 'ObjectExpression') {
                             for (var j = 0; j < declarations[i].init.properties.length; j++) {
                                 var name = declarations[i].init.properties[j].key.name;
-                                var value = declarations[i].init.properties[j].value.value;
-                                directive["'" + name + "'"] = value;
+                                if (name == "scope") {
+                                    if (declarations[i].init.properties[j].value.type == 'ObjectExpression') {
+                                        var value="isolate";
+                                    }else
+                                    {
+                                        var value = declarations[i].init.properties[j].value.value;
+                                    }
+                                } else {
+                                    var value = declarations[i].init.properties[j].value.value;
+
+                                }
+                                directive[name] = value;
                             }
                         }
                     }
