@@ -15,6 +15,8 @@ var uniqueControllerFunction = [];
 
 function getParsedController(code) {
     getJavaScriptCode(code);
+    getControllerFunctionListFromModelAssingmentVariable();
+    getUpdatedModelVariables();
     getUniqueModelVariableList();
     getUniqueControllerFunctionList();
     var copy_viewModelIdentifier = Colone(viewModelIdentifier);
@@ -112,18 +114,15 @@ function getJavaScriptCode(code) {
 
         }
     });
-    getControllerFunctionListFromModelAssingmentVariable();
-    getUpdatedModelVariables();
-
 }
 
 
 function getControllerFunctionListFromModelAssingmentVariable() {
     for (var i = 0; i < functionList.length; i++) {
-        var regx = functionList[i].controllerFunctionName;// '/' + functionList[i].name + '/g';
-        var regxObj = new RegExp(regx);
+        var cfName = functionList[i].controllerFunctionName;
+        var regx = eval('/' + cfName + '/g');
         for (var j = 0; j < vm_VariableList.length; j++) {
-            if (regxObj.test(vm_VariableList[j].value)) {
+            if (regx.exec(vm_VariableList[j].value)) {
 
                 functionList[i].controllerFunctionName = vm_VariableList[j].modelVariableName;
                 functionList[i].endLineNumber = vm_VariableList[j].lineNumber;
@@ -135,17 +134,24 @@ function getControllerFunctionListFromModelAssingmentVariable() {
 
 function getUpdatedModelVariables() {
     for (var i = 0; i < vm_VariableList.length; i++) {
-        var regx = vm_VariableList[i].modelVariableName;// '/' + functionList[i].name + '/g';
-        var regxObj = new RegExp(regx);
+        var vm_variableName = vm_VariableList[i].modelVariableName;
+        var regx = eval('/' + vm_variableName + '/g');
         for (var j = 0; j < controllerFunctionList.length; j++) {
-            if (!(regxObj.test(controllerFunctionList[j].controllerFunctionName))) {
-                var prefix = vm_VariableList[j].modelVariableName.split('.')[0];
+            if ((regx.exec(controllerFunctionList[j].controllerFunctionName))) {
+                var prefix = vm_VariableList[i].modelVariableName.split('.')[0];
                 if (prefix === "vm" || prefix === viewModelIdentifier.name) {
-                    modelVariableList.push(vm_VariableList[j]);
+                    vm_VariableList[i] = null;
                 }
             }
         }
     }
+    for (var k = 0; k < vm_VariableList.length; k++) {
+        if (vm_VariableList[k] != null) {
+            modelVariableList.push(vm_VariableList[k]);
+        }
+
+    }
+
 
 }
 
@@ -227,7 +233,7 @@ function getAssignmentValueFromRightSide(viewModelIdentifier, node) {
             var lineNumber = node.right.properties[j].loc.end.line;
             vm_VariableList.push(new controllerEntity.modelVariable(variableName, variableValue, variableDataType, lineNumber));
         }
-        return ;
+        return;
     }
     if (node.right.type == 'ArrayExpression') {
 
@@ -247,6 +253,10 @@ function getAssignmentValueFromRightSide(viewModelIdentifier, node) {
         return;
 
     }
+    /*if (node.right.type == 'FunctionExpression' || node.right.type == 'FunctionDeclaration') {
+     getAllFunctionalExpression(node);
+     }*/
+
 }
 
 

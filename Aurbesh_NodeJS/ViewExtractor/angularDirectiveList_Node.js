@@ -43,7 +43,7 @@ function getAngularAttributeDirectivesForModelValue() {
     angularAttributeDirectivesForModelValue.push(new angularAttributeDirective('when', enumDataType.NA));
     angularAttributeDirectivesForModelValue.push(new angularAttributeDirective('offset', enumDataType.NUMBER));
 //fro boolean input type such as radio button
-    angularAttributeDirectivesForModelValue.push(new angularAttributeDirective('ng-model', enumDataType.BOOLEAN));
+    angularAttributeDirectivesForModelValue.push(new angularAttributeDirective('ng-model', enumDataType.NA));
     return angularAttributeDirectivesForModelValue;
 }
 

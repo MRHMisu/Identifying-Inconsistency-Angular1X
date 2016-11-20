@@ -228,7 +228,8 @@ function getControllerFunctions(parsedDOM, htmlRawCode) {
         if (elements != null && elements.length > 0) {
             for (var j = 0; j < elements.length; j++) {
                 var directiveAttributeCFValue = elements[j].getAttribute(directiveCF.signature);
-                directiveAttributeCFValue = directiveAttributeCFValue.replace('!', '').replace('(', '').replace(')', '').trim();
+                directiveAttributeCFValue = directiveAttributeCFValue.replace('!', '').trim();
+                directiveAttributeCFValue = directiveAttributeCFValue.split('(')[0];
                 var lineNumberSignature = directiveCF.signature + '=' + '"' + directiveAttributeCFValue + '"';
                 var lineNumber = getLineNumberOfTheSignature(lineNumberSignature, htmlRawCode);
                 for (var k = 0; k < lineNumber.length; k++) {

@@ -2,17 +2,114 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6299093c-7c69-4941-b4b2-252c9f4af935" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/myBasePapperDemo/basepaper/angular-route.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/myBasePapperDemo/basepaper/angular.js" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/myBasePapperDemo/basepaper/controller.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AST.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Abrush/.idea/Abrush.iml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Abrush/.idea/misc.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Abrush/.idea/modules.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Abrush/.idea/workspace.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Abrush/Browser/ace-builds/src-noconflict/ace.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Abrush/Browser/ace-builds/src-noconflict/mode-html.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Abrush/Browser/ace-builds/src-noconflict/theme-monokai.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Abrush/Browser/ace-builds/src-noconflict/worker-html.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Abrush/Browser/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Abrush/Browser/js/alias.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Abrush/Browser/js/code-parser.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Abrush/Browser/js/editor-init.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Abrush/Browser/js/fwtypes/angular/grouping-angular.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Abrush/Browser/js/fwtypes/angular/mvc-extraction-angular.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Abrush/Browser/js/fwtypes/backbone/grouping-backbone.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Abrush/Browser/js/fwtypes/backbone/mvc-extraction-backbone.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Abrush/Browser/js/fwtypes/ember/grouping-ember.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Abrush/Browser/js/fwtypes/ember/mvc-extraction-ember.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Abrush/Browser/js/grouping.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Abrush/Browser/js/identifier-comparison.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Abrush/Browser/js/libs/escodegen.browser.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Abrush/Browser/js/libs/esprima.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Abrush/Browser/js/libs/estraverse.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Abrush/Browser/js/libs/jquery-ui.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Abrush/Browser/js/libs/jquery.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Abrush/Browser/js/mvc-classes/controller-functions.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Abrush/Browser/js/mvc-classes/controller.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Abrush/Browser/js/mvc-classes/model-variables.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Abrush/Browser/js/mvc-classes/model.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Abrush/Browser/js/mvc-classes/mvc-group.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Abrush/Browser/js/mvc-classes/view.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Abrush/Browser/js/mvc-extraction.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Abrush/Browser/js/polyglot-objects.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Abrush/Browser/js/type-inference.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Abrush/Browser/js/utils/js-identifier-utils.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Abrush/Browser/js/utils/json-utils.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Abrush/Browser/styles/jquery-ui.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Abrush/Browser/styles/main.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/BasePapperApp/angular-route.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/BasePapperApp/angular.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/BasePapperApp/app.config.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/BasePapperApp/controller.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/BasePapperApp/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/BasePapperApp/results.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/BasePapperApp/search.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ControllerParser.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ControllerParser_NodeJS.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/DirectiveParser.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Editor.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/InconsistencyIdentification.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/RouteParser.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/TestUsingNode.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ViewParser.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ViewParser_NodeJS.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/angularDirectiveList.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/angularDirectiveListForNode.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/angularParser.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/democontroller.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demoeditor.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demoview.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/entity/ModelViewController.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/entity/controllerFunction.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/entity/model.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/entity/view.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/htmlParser.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/init.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/javascriptParser.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/escodegen.browser.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/esmorph.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/esprima.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/estraverse.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/jquery-ui.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/jquery.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/misu.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/myBasePapperDemo/basepaper/angular-route.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/myBasePapperDemo/basepaper/angular.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/myBasePapperDemo/basepaper/app.config.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/myBasePapperDemo/basepaper/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/myBasePapperDemo/basepaper/result.controller.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/myBasePapperDemo/basepaper/results.view.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/myBasePapperDemo/basepaper/search.controller.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/myBasePapperDemo/basepaper/search.view.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/myBasePapperDemo/lib/angular-route.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/myBasePapperDemo/lib/angular.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/myBasePapperDemo/my/index2.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/myBasePapperDemo/my/product-delaits.directive.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/myBasePapperDemo/my/product-info.directive.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/myBasePapperDemo/my/productDetails.controller.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/myBasePapperDemo/my/productDetails.view.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/myBasePapperDemo/my/productInfo.controller.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/myBasePapperDemo/my/productInfo.view.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/myBasePapperDemo/my/productList.controller.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/myBasePapperDemo/my/productList.view.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/myBasePapperDemo/my/shoppingList.config.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/myBasePapperDemo/my/shoppingList.service.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/myBasePapperDemo/myCtlr.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/myBasePapperDemo/myIndex.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/myBasePapperDemo/mydir.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reference.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/util/html tags" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/util/logger.js" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Aurbesh_NodeJS/ControllerExtractor/ControllerParser_NodeJS.js" afterPath="$PROJECT_DIR$/Aurbesh_NodeJS/ControllerExtractor/ControllerParser_NodeJS.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Aurbesh_NodeJS/InconsistencyIdentifier/InconsistencyIdentification.js" afterPath="$PROJECT_DIR$/Aurbesh_NodeJS/InconsistencyIdentifier/InconsistencyIdentification.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Aurbesh_NodeJS/MVCGroupBulider/MVCGroup_Builder.js" afterPath="$PROJECT_DIR$/Aurbesh_NodeJS/MVCGroupBulider/MVCGroup_Builder.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ViewParser_NodeJS.js" afterPath="$PROJECT_DIR$/ViewParser_NodeJS.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/myBasePapperDemo/basepaper/app.config.js" afterPath="$PROJECT_DIR$/myBasePapperDemo/basepaper/app.config.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/myBasePapperDemo/basepaper/index.html" afterPath="$PROJECT_DIR$/myBasePapperDemo/basepaper/index.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/myBasePapperDemo/basepaper/results.html" afterPath="$PROJECT_DIR$/myBasePapperDemo/basepaper/results.view.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/myBasePapperDemo/basepaper/search.html" afterPath="$PROJECT_DIR$/myBasePapperDemo/basepaper/search.view.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Aurbesh_NodeJS/ViewExtractor/ViewParser_NodeJS.js" afterPath="$PROJECT_DIR$/Aurbesh_NodeJS/ViewExtractor/ViewParser_NodeJS.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Aurbesh_NodeJS/ViewExtractor/angularDirectiveList_Node.js" afterPath="$PROJECT_DIR$/Aurbesh_NodeJS/ViewExtractor/angularDirectiveList_Node.js" />
     </list>
     <ignored path="Identifying-Inconsistency-Angular1X.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -63,8 +160,11 @@
         <option value="$PROJECT_DIR$/myBasePapperDemo/basepaper/search.view.html" />
         <option value="$PROJECT_DIR$/myBasePapperDemo/basepaper/results.view.html" />
         <option value="$PROJECT_DIR$/myBasePapperDemo/basepaper/result.controller.js" />
+        <option value="$PROJECT_DIR$/Aurbesh_NodeJS/ViewExtractor/ViewParser_NodeJS.js" />
+        <option value="$PROJECT_DIR$/Aurbesh_NodeJS/ViewExtractor/angularDirectiveList_Node.js" />
         <option value="$PROJECT_DIR$/Aurbesh_NodeJS/MVCGroupBulider/MVCGroup_Builder.js" />
         <option value="$PROJECT_DIR$/Aurbesh_NodeJS/ControllerExtractor/ControllerParser_NodeJS.js" />
+        <option value="$PROJECT_DIR$/Aurbesh_NodeJS/InconsistencyIdentifier/InconsistencyIdentification.js" />
       </list>
     </option>
   </component>
@@ -80,7 +180,7 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1382" />
+    <option name="width" value="1378" />
     <option name="height" value="744" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
@@ -123,7 +223,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Abrush" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="nodejs_interpreter_path" value="C:/Program Files/nodejs/node" />
@@ -136,8 +236,11 @@
       <recent name="D:\Implementation Work\Identifying-Inconsistency-Angular1X" />
     </key>
   </component>
-  <component name="RunManager" selected="Node.js.MVCGroup_Builder.js">
+  <component name="RunManager" selected="Node.js.InconsistencyIdentification.js">
     <configuration default="false" name="MVCGroup_Builder.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-node="project" path-to-js-file="MVCGroup_Builder.js" working-dir="$PROJECT_DIR$/Aurbesh_NodeJS/MVCGroupBulider">
+      <method />
+    </configuration>
+    <configuration default="false" name="InconsistencyIdentification.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-node="project" path-to-js-file="InconsistencyIdentification.js" working-dir="$PROJECT_DIR$/Aurbesh_NodeJS/InconsistencyIdentifier">
       <method />
     </configuration>
     <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
@@ -193,12 +296,14 @@
       <recursive>false</recursive>
       <method />
     </configuration>
-    <list size="1">
+    <list size="2">
       <item index="0" class="java.lang.String" itemvalue="Node.js.MVCGroup_Builder.js" />
+      <item index="1" class="java.lang.String" itemvalue="Node.js.InconsistencyIdentification.js" />
     </list>
     <recent_temporary>
-      <list size="1">
-        <item index="0" class="java.lang.String" itemvalue="Node.js.MVCGroup_Builder.js" />
+      <list size="2">
+        <item index="0" class="java.lang.String" itemvalue="Node.js.InconsistencyIdentification.js" />
+        <item index="1" class="java.lang.String" itemvalue="Node.js.MVCGroup_Builder.js" />
       </list>
     </recent_temporary>
   </component>
@@ -223,17 +328,18 @@
       <workItem from="1478747253491" duration="50000" />
       <workItem from="1478751403279" duration="903000" />
       <workItem from="1478763693151" duration="5399000" />
+      <workItem from="1479617767931" duration="7720000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="45183000" />
+    <option name="totallyTimeSpent" value="52903000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
+    <frame x="-8" y="-8" width="1378" height="744" extended-state="1" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24158126" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14537445" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329653" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -250,6 +356,24 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
+    <layout-to-restore>
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329653" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21365638" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329653" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3280757" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
@@ -264,7 +388,27 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="9" />
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/Aurbesh_NodeJS/InconsistencyIdentifier/InconsistencyIdentification.js</url>
+          <line>25</line>
+          <properties />
+          <option name="timeStamp" value="33" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/Aurbesh_NodeJS/InconsistencyIdentifier/InconsistencyIdentification.js</url>
+          <line>20</line>
+          <properties />
+          <option name="timeStamp" value="34" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/Aurbesh_NodeJS/ViewExtractor/ViewParser_NodeJS.js</url>
+          <line>34</line>
+          <properties />
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="36" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -424,7 +568,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-465">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -432,7 +575,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="419">
           <caret line="28" column="33" selection-start-line="28" selection-start-column="16" selection-end-line="28" selection-end-column="33" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -440,23 +582,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/myBasePapperDemo/basepaper/controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/myBasePapperDemo/basepaper/controller.js" />
     <entry file="file://$PROJECT_DIR$/myBasePapperDemo/basepaper/search.controller.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="10" column="23" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -464,7 +597,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="1" column="28" selection-start-line="1" selection-start-column="28" selection-end-line="1" selection-end-column="28" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -472,7 +604,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
           <caret line="8" column="58" selection-start-line="0" selection-start-column="0" selection-end-line="8" selection-end-column="58" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -480,7 +611,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
           <caret line="11" column="7" selection-start-line="11" selection-start-column="7" selection-end-line="11" selection-end-column="7" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -496,7 +626,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -504,7 +633,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
           <caret line="18" column="5" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -512,7 +640,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="10" column="7" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -520,7 +647,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="6" column="58" selection-start-line="6" selection-start-column="58" selection-end-line="6" selection-end-column="58" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -528,7 +654,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -536,7 +661,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -544,7 +668,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -552,7 +675,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -560,7 +682,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -568,7 +689,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -576,7 +696,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -584,7 +703,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -592,45 +710,74 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="12" column="33" selection-start-line="12" selection-start-column="33" selection-end-line="12" selection-end-column="33" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Aurbesh_NodeJS/ControllerExtractor/ControllerParser_NodeJS.js">
+    <entry file="file://$PROJECT_DIR$/Aurbesh_NodeJS/InconsistencyIdentifier/Inconsistency_Entity.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1598">
-          <caret line="404" column="17" selection-start-line="404" selection-start-column="17" selection-end-line="404" selection-end-column="17" />
-          <folding>
-            <element signature="n#!!block;n#reinitializeAllGlobalObject#0" expanded="false" />
-            <element signature="n#!!block;n#getUniqueModelVariableList#0" expanded="false" />
-            <element signature="n#!!block;n#copyArray#0" expanded="false" />
-            <element signature="n#!!block;n#isContainMV#0" expanded="false" />
-            <element signature="n#!!block;n#compareToModelVariableInController#0" expanded="false" />
-            <element signature="n#!!block;n#getUniqueControllerFunctionList#0" expanded="false" />
-            <element signature="n#!!block;n#isContainCF#0" expanded="false" />
-            <element signature="n#!!block;n#compareToControllerFunctionInController#0" expanded="false" />
-            <element signature="n#!!block;n#getJavaScriptCode#0" expanded="false" />
-            <element signature="n#!!block;n#getControllerFunctionListFromModelAssingmentVariable#0" expanded="false" />
-            <element signature="n#!!block;n#getUpdatedModelVariables#0" expanded="false" />
-            <element signature="n#!!block;n#isViewModelThisExpression#0" expanded="false" />
-            <element signature="e#5554#5764#0" expanded="false" />
-            <element signature="n#!!block;n#getViewModelVariables#0" expanded="false" />
-            <element signature="n#!!block;n#getAssignmentValueFromRightSide#0" expanded="false" />
-            <element signature="e#9520#9571#0" expanded="false" />
-            <element signature="n#!!block;n#getAllFunctionalExpression#0" expanded="false" />
-            <element signature="e#12518#12866#0" expanded="false" />
-            <element signature="n#!!block;n#getInternalFunctionDeclareVariables#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Aurbesh_NodeJS/MVCGroupBulider/MVCGroup_Builder.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="215">
-          <caret line="17" column="1" selection-start-line="17" selection-start-column="1" selection-end-line="17" selection-end-column="1" />
+        <state relative-caret-position="201">
+          <caret line="15" column="17" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="17" />
           <folding>
             <element signature="n#!!block;n#getPrimaryMVCGroup#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Aurbesh_NodeJS/ControllerExtractor/ControllerParser_NodeJS.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="29" column="31" selection-start-line="29" selection-start-column="9" selection-end-line="29" selection-end-column="31" />
+          <folding>
+            <element signature="n#!!block;n#reinitializeAllGlobalObject#0" expanded="false" />
+            <element signature="n#!!block;n#copyArray#0" expanded="false" />
+            <element signature="n#!!block;n#isContainMV#0" expanded="false" />
+            <element signature="n#!!block;n#compareToModelVariableInController#0" expanded="false" />
+            <element signature="n#!!block;n#isContainCF#0" expanded="false" />
+            <element signature="n#!!block;n#compareToControllerFunctionInController#0" expanded="false" />
+            <element signature="n#!!block;n#getJavaScriptCode#0" expanded="false" />
+            <element signature="n#!!block;n#isViewModelThisExpression#0" expanded="false" />
+            <element signature="e#5660#5870#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Aurbesh_NodeJS/MVCGroupBulider/MVCGroup_Entity.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="42" selection-start-line="16" selection-start-column="29" selection-end-line="16" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Aurbesh_NodeJS/ViewExtractor/angularDirectiveList_Node.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-397">
+          <caret line="24" column="110" selection-start-line="24" selection-start-column="103" selection-end-line="24" selection-end-column="110" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Aurbesh_NodeJS/ViewExtractor/ViewParser_NodeJS.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="39" column="41" selection-start-line="39" selection-start-column="41" selection-end-line="39" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Aurbesh_NodeJS/InconsistencyIdentifier/InconsistencyIdentification.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="18" column="42" selection-start-line="18" selection-start-column="42" selection-end-line="18" selection-end-column="42" />
+          <folding />
         </state>
       </provider>
     </entry>
