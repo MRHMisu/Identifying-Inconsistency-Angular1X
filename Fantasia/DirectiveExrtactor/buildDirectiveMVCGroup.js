@@ -13,6 +13,7 @@ function getDirectiveMVCGroup(requiredFiles) {
     getDirectiveViewAndController(requiredFiles.directiveFiles);
     var primaryMvcGroup = getPrimaryMVCGroup(directiveMVCStructure, requiredFiles);
     var mvcGroup = buildMVCGroup(primaryMvcGroup);
+    return mvcGroup;
 }
 
 

@@ -250,7 +250,20 @@ function getAssignmentValueFromRightSide(viewModelIdentifier, node) {
         return modelVariableArrayList.push(new controllerEntity.modelVariableArray(identifierName, singularPart, elementProperties, lineNumber));
     }
     if (node.right.type == 'CallExpression') {
-        return;
+        var variableName =viewModelIdentifier;
+        var variableValue = "CallExpression";
+        var variableDataType = "functionCall";
+        var lineNumber = node.right.loc.end.line;
+        return vm_VariableList.push(new controllerEntity.modelVariable(variableName, variableValue, variableDataType, lineNumber));
+
+    }
+    if(node.right.type=='MemberExpression')
+    {
+        var variableName =viewModelIdentifier;
+        var variableValue = "MemberExpression";
+        var variableDataType = "Object";
+        var lineNumber = node.right.loc.end.line;
+        return vm_VariableList.push(new controllerEntity.modelVariable(variableName, variableValue, variableDataType, lineNumber));
 
     }
     /*if (node.right.type == 'FunctionExpression' || node.right.type == 'FunctionDeclaration') {

@@ -7,18 +7,23 @@ var ControllerParser = require('../ControllerExtractor/ControllerParser_NodeJS')
 var ViewParser = require('../ViewExtractor/ViewParser_NodeJS');
 var DirectiveGroup=require('../DirectiveExrtactor/buildDirectiveMVCGroup.js');
 
-getMVCGroupList();
-var l = 0;
-function getMVCGroupList() {
+function getMVCGroupList(path) {
 
-    var applicationDirectoryPath = "D:\\Implementation Work\\PapperDemoApp\\Shopping List App";
+    var applicationDirectoryPath =path;
     var requiredFiles = fileContentReader.getRequiredFiles(applicationDirectoryPath);
     var parsedRoutes = routeParser.getParsedRoute(requiredFiles.configFile[0].content);
     var primaryMVCGroups = getPrimaryMVCGroup(parsedRoutes, requiredFiles);
     var MVCGroups = buildMVCGroup(primaryMVCGroups);
     var MVCGroupForDirectives=DirectiveGroup.getDirectiveMVCGroup(requiredFiles);
-    return MVCGroups;
+    return {
+        "MVCGroup":MVCGroups,
+        "MVCGroupForDirective":MVCGroupForDirectives
+
+    }
 }
+
+
+
 
 function getPrimaryMVCGroup(parsedRoutes, requiredFiles) {
     var primaryMVCGroup = [];

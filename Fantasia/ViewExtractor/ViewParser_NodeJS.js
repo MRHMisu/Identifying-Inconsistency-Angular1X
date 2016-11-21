@@ -102,13 +102,16 @@ function getHTMLCode(htmlRawCode) {
     getModelVariables(parsedDOM, htmlRawCode);
     getControllerFunctions(parsedDOM, htmlRawCode);
     getNGRepeatElements(parsedDOM, htmlRawCode);
-    getAngularExpressionDirective(htmlRawCode, parsedDOM);
+    getAngularExpressionDirectiveValue(htmlRawCode, parsedDOM);
+    getAngularExpressionVariableList(htmlRawCode, parsedDOM);
 
 }
 function getLineNumberOfTheSignature(signature, htmlRawCode) {
     var lineNumber = [];
     var splitedHtmlRawCode = htmlRawCode.split("\n");
     for (var i = 0; i < splitedHtmlRawCode.length; i++) {
+
+        //string.indexOf(substring) !== -1);
         if (splitedHtmlRawCode[i].includes(signature) > 0) {
             var lineNo = i + 1;
             lineNumber.push(lineNo);
@@ -116,7 +119,25 @@ function getLineNumberOfTheSignature(signature, htmlRawCode) {
     }
     return lineNumber;
 }
-function getAngularExpressionDirective(htmlRawCode, parsedDOM) {
+
+
+function getAngularExpressionVariableList(htmlRawCode, parsedDOM) {
+    //get all angular Expression {{*}}
+    var allAngularExpression = traversDomNodes(parsedDOM, new Array(), parsedDOM);
+    for (var i = 0; i < allAngularExpression.length; i++) {
+        var lineNumberSignature=allAngularExpression[i];
+        var modelVariableName=lineNumberSignature;
+        var dataType="angularExpression";
+        var directive="angularExpression";
+        var lineNumber = getLineNumberOfTheSignature(lineNumberSignature, htmlRawCode);
+        for (var k = 0; k < lineNumber.length; k++) {
+            extractedModelVariableList.push(new viewEntity.ModelVariableInView(directive, dataType, lineNumber[k], modelVariableName));
+        }
+    }
+    
+}
+
+function getAngularExpressionDirectiveValue(htmlRawCode, parsedDOM) {
     //get all angular Expression {{*}}
     var allAngularExpression = traversDomNodes(parsedDOM, new Array(), parsedDOM);
     for (var i = 0; i < allAngularExpression.length; i++) {
@@ -160,11 +181,9 @@ function getAngularExpressionDirective(htmlRawCode, parsedDOM) {
                     for (var m = 0; m < lineNumber.length; m++) {
                         extractedControllerFunctionList.push(new viewEntity.ControllerFunctionInView(directive, dataType, lineNumber[m], controllerFunctionName));
                     }
-
                 }
             }
         }
-
     }
 
 }
@@ -230,7 +249,7 @@ function getControllerFunctions(parsedDOM, htmlRawCode) {
                 var directiveAttributeCFValue = elements[j].getAttribute(directiveCF.signature);
                 directiveAttributeCFValue = directiveAttributeCFValue.replace('!', '').trim();
                 directiveAttributeCFValue = directiveAttributeCFValue.split('(')[0];
-                var lineNumberSignature = directiveCF.signature + '=' + '"' + directiveAttributeCFValue + '"';
+                var lineNumberSignature = directiveCF.signature + '=' + '"' + directiveAttributeCFValue;
                 var lineNumber = getLineNumberOfTheSignature(lineNumberSignature, htmlRawCode);
                 for (var k = 0; k < lineNumber.length; k++) {
                     extractedControllerFunctionList.push(new viewEntity.ControllerFunctionInView(directiveCF.signature, directiveCF.acceptedDatatype, directiveAttributeCFValue, lineNumber[k]));
@@ -241,11 +260,11 @@ function getControllerFunctions(parsedDOM, htmlRawCode) {
     }
 
 }
-function traversDomNodes(node, ngRepeatVariableList, theDom) {
+function traversDomNodes(node, angularExpressionVariableList, theDom) {
 
     if (node.nodeType == 9) { //nodeType refers  document node
         for (var i = 0; i < node.childNodes.length; i++) {
-            traversDomNodes(node.childNodes[i], ngRepeatVariableList, theDom);
+            traversDomNodes(node.childNodes[i], angularExpressionVariableList, theDom);
         }
     }
     else if (node.nodeType == 3) { //nodeType refers text node
@@ -254,15 +273,15 @@ function traversDomNodes(node, ngRepeatVariableList, theDom) {
         var tempMatchList;
         while ((tempMatchList = angularExpression.exec(textNodeData)) !== null) {
             var replaced = tempMatchList[0].replace(/{{/g, '').replace(/}}/g, '').trim();
-            ngRepeatVariableList.push(replaced);
+            angularExpressionVariableList.push(replaced);
         }
     }
     else if (node.nodeType == 1) { //nodeType refers element node
         for (var i = 0; i < node.childNodes.length; i++) {
-            traversDomNodes(node.childNodes[i], ngRepeatVariableList, theDom);
+            traversDomNodes(node.childNodes[i], angularExpressionVariableList, theDom);
         }
     }
-    return ngRepeatVariableList;
+    return angularExpressionVariableList;
 }
 
 
